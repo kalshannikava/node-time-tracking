@@ -1,0 +1,44 @@
+{
+  "users": [
+      {
+          "id": 0,
+          "name": "John Doe",
+          "email": "johndoe@gmail.com"
+      },
+      {
+          "id": 1,
+          "name": "Jane Doe",
+          "email": "janedoe@gmail.com"
+      }
+  ],
+  "teams": [
+    {
+      "id": 0,
+      "name": "Team 1",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Node.js_logo.svg/2560px-Node.js_logo.svg.png"
+    },
+    {
+      "id": 1,
+      "name": "Team 2",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.png"
+    }
+  ],
+  "workPeriods": [
+    {
+      "id": 0,
+      "from": "January 1, 2023",
+      "to": "April 15, 2023",
+      "weekDays": "25",
+      "userId": "1",
+      "teamId": "0"
+    },
+    {
+      "id": 1,
+      "from": "May 11, 2023",
+      "to": "December 10, 2023",
+      "weekDays": "31",
+      "userId": "0",
+      "teamId": "1"
+    }
+  ]
+}
