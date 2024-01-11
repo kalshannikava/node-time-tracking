@@ -21,7 +21,7 @@ async function createUser (req: CreateUserRequest, res: Response) {
   if (!validate(user.email)) {
     return res.status(400).json({ error: 'Invalid email' });
   }
-  await db.push('/users', [user], true);
+  await db.push('/users[]', user, true);
   return res.status(201).json(user);
 }
 
