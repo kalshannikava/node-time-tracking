@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { validate } from 'email-validator';
 
 import db from '../db';
-import { CreateUserRequest, User } from '../types/user';
+import { CreateUserRequest, DeleteUserRequest, User } from '../types/user';
 
 async function getUsers (_req: Request, res: Response) {
   const data: User[] = await db.getObject<User[]>('/users');
@@ -21,11 +21,23 @@ async function createUser (req: CreateUserRequest, res: Response) {
   if (!validate(user.email)) {
     return res.status(400).json({ error: 'Invalid email' });
   }
-  await db.push('/users', [user], false);
+  await db.push('/users', [user], true);
   return res.status(201).json(user);
+}
+
+async function deleteUser (req: DeleteUserRequest, res: Response) {
+  const id: number = Number(req.params.id);
+  const index: number = await db.getIndex('/users', id, 'id');
+  if (index === -1) {
+    return res.status(404).json({ error: 'User not found' });
+  }
+  const deleted: User = await db.getObject<User>(`/users[${index}]`);
+  await db.delete(`/users[${index}]`);
+  return res.status(200).json(deleted);
 }
 
 export {
   getUsers,
   createUser,
+  deleteUser,
 }
