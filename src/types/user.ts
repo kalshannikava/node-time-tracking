@@ -7,6 +7,8 @@ export type User = {
   timezone: string,
 }
 
+export interface GetUserRequest extends Request<{ id: string }> {}
+
 export interface CreateUserRequest extends Request {
   body: Omit<User, 'id'>,
 }
