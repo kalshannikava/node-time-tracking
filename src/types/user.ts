@@ -11,4 +11,8 @@ export interface CreateUserRequest extends Request {
   body: Omit<User, 'id'>,
 }
 
-export type DeleteUserRequest = Request<{ id: string }>;
+export interface UpdateUserRequest extends Request <{ id: string }> {
+  body: Partial<Omit<User, 'id'>>,
+}
+
+export interface DeleteUserRequest extends Request<{ id: string }> {}
