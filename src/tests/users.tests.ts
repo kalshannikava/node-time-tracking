@@ -13,7 +13,6 @@ describe('GET /users', () => {
     await request(app).get('/users')
     .expect('Content-Type', /json/)
     .expect(200);
-    console.log('test lala')
   });
 });
 
@@ -22,15 +21,11 @@ describe('GET /users/id', () => {
     await request(app).get('/users/0')
     .expect('Content-Type', /json/)
     .expect(200);
-
-    console.log('test 2 lala')
   });
 
   it('should respond with 404 not found when user doesn\'t exist', async () => {
     await request(app).get('/users/-1')
     .expect(404);
-
-    console.log('test 3 lala')
   });
 });
 
@@ -40,8 +35,6 @@ describe('POST /users', () => {
     .send({ name: 'Test', email: 'test@test.com', timezone: 'GMT+1' })
     .expect('Content-Type', /json/)
     .expect(201);
-
-    console.log('test 4 lala')
   });
 
   it('should respond with 400 bad request when required property is missing', async () => {
@@ -56,16 +49,12 @@ describe('POST /users', () => {
     await request(app).post('/users')
     .send({ email: 'test@test.com', timezone: 'GMT+1' })
     .expect(400);
-
-    console.log('test 5 lala')
   });
 
   it('should respond with 400 bad request when email is invalid', async () => {
     await request(app).post('/users')
     .send({ name: 'Test', email: 'invalid email', timezone: 'GMT+1' })
     .expect(400);
-
-    console.log('test 6 lala')
   });
 });
 
