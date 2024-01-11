@@ -10,3 +10,5 @@ export type User = {
 export interface CreateUserRequest extends Request {
   body: Omit<User, 'id'>,
 }
+
+export type DeleteUserRequest = Request<{ id: string }>;
