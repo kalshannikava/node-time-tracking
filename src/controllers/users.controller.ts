@@ -2,14 +2,14 @@ import { Request, Response } from 'express';
 import { validate } from 'email-validator';
 
 import db from '../db';
-import { User } from '../types/user';
+import { CreateUserRequest, User } from '../types/user';
 
 async function getUsers (_req: Request, res: Response) {
   const data: User[] = await db.getObject<User[]>('/users');
   return res.status(200).json(data);
 }
 
-async function createUser (req: Request, res: Response) {
+async function createUser (req: CreateUserRequest, res: Response) {
   const lastUser: User = await db.getObject<User>('/users[-1]');
   const user: User = {
     ...req.body,
