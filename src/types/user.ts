@@ -7,14 +7,18 @@ export type User = {
   timezone: string,
 }
 
-export interface GetUserRequest extends Request<{ id: string }> {}
+export interface RequestWithID extends Request<{ id: string }> {
+  index: number;
+}
+
+export interface GetUserRequest extends RequestWithID {}
 
 export interface CreateUserRequest extends Request {
   body: Omit<User, 'id'>,
 }
 
-export interface UpdateUserRequest extends Request <{ id: string }> {
+export interface UpdateUserRequest extends RequestWithID {
   body: Partial<Omit<User, 'id'>>,
 }
 
-export interface DeleteUserRequest extends Request<{ id: string }> {}
+export interface DeleteUserRequest extends RequestWithID {}
