@@ -4,8 +4,10 @@ import { checkIfTeamExists } from '../middleware/teams.middleware';
 
 const teamsRouter: Router = Router();
 
+// Validation
 teamsRouter.use('/:id', checkIfTeamExists);
 
+// Routes
 teamsRouter.get('/', getTeams);
 teamsRouter.get('/:id', getTeam);
 teamsRouter.post('/', createTeam);
