@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 
 import { validate } from 'email-validator';
 import db from '../db';
-import { RequestWithID } from '../types/user';
+import { RequestWithID } from '../types/shared';
 
 async function checkIfUserExists (req: RequestWithID, res: Response, next: NextFunction) {
   const id: number = Number(req.params.id);

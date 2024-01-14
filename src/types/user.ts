@@ -1,14 +1,11 @@
 import { Request } from 'express';
+import { RequestWithID } from './shared';
 
 export type User = {
   id: number,
   name: string,
   email: string,
   timezone: string,
-}
-
-export interface RequestWithID extends Request<{ id: string }> {
-  index: number;
 }
 
 export interface GetUserRequest extends RequestWithID {}
