@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { createUser, deleteUser, getUser, getUsers, updateUser } from '../controllers/users.controller';
-import { checkIfUserExists, validateEmail } from '../middleware/users';
+import { checkIfUserExists, validateEmail } from '../middleware/users.middleware';
 
 const usersRouter: Router = Router();
 
