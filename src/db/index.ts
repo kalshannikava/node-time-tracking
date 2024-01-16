@@ -19,6 +19,10 @@ class DataBase {
     return DataBase.instance;
   }
 
+  public static async writeUsers (data: User[]): Promise<void> {
+    return await this.db.push('/users', data);
+  }
+
   public static async getUsers (): Promise<User[]> {
     return await this.db.getObject<User[]>('/users');
   }
