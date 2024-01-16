@@ -9,16 +9,19 @@ export type User = {
 
 export interface RequestWithID extends Request<{ id: string }> {
   index: number;
+  user: User;
 }
 
 export interface GetUserRequest extends RequestWithID {}
 
+export type CreateUserData = Omit<User, 'id'>;
 export interface CreateUserRequest extends Request {
-  body: Omit<User, 'id'>,
+  body: CreateUserData,
 }
 
+export type UpdateUserData = Partial<Omit<User, 'id'>>;
 export interface UpdateUserRequest extends RequestWithID {
-  body: Partial<Omit<User, 'id'>>,
+  body: UpdateUserData,
 }
 
 export interface DeleteUserRequest extends RequestWithID {}

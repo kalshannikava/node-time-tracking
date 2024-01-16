@@ -1,16 +1,18 @@
 import { Request, Response, NextFunction } from 'express';
 
 import { validate } from 'email-validator';
-import db from '../db';
-import { RequestWithID } from '../types/user';
+import DataBase from '../db';
+import { RequestWithID, User } from '../types/user';
 
 async function checkIfUserExists (req: RequestWithID, res: Response, next: NextFunction) {
   const id: number = Number(req.params.id);
-  const index: number = await db.getIndex('/users', id, 'id');
-  if (index === -1) {
-    return res.status(404).json({ error: 'User not found' });
+  try {
+    const [index, user]: [number, User] = await DataBase.getUserById(id);
+    req.user = user;
+    req.index = index;
+  } catch (error) {
+    return res.status(404).json({ error: error.message });
   }
-  req.index = index;
   next();
 }
 
