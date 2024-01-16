@@ -9,6 +9,7 @@ export type User = {
 
 export interface RequestWithID extends Request<{ id: string }> {
   index: number;
+  user: User;
 }
 
 export interface GetUserRequest extends RequestWithID {}
