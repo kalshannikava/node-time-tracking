@@ -7,4 +7,5 @@ export type DBRoutes = '/' | '/users' | '/teams' | '/workPeriods';
 
 export interface RequestWithID extends Request<{ id: string }> {
   index: number;
+  user: User;
 }
