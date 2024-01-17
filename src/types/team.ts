@@ -9,12 +9,14 @@ export type Team = {
 
 export interface GetTeamRequest extends RequestWithID {}
 
+export type CreateTeamData = Omit<Team, 'id'>;
 export interface CreateTeamRequest extends Request {
-  body: Omit<Team, 'id'>;
+  body: CreateTeamData;
 }
 
+export type UpdateTeamData = Partial<CreateTeamData>;
 export interface UpdateTeamRequest extends RequestWithID {
-  body: Partial<Omit<Team, 'id'>>;
+  body: UpdateTeamData;
 }
 
 export interface DeleteTeamRequest extends RequestWithID {}
