@@ -58,7 +58,7 @@ class DataBase {
   }
 
   /* Teams */
-  public static async writeTeam (data: Team[]): Promise<void> {
+  public static async writeTeams (data: Team[]): Promise<void> {
     return await this.db.push('/teams', data);
   }
 

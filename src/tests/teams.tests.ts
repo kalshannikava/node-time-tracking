@@ -1,12 +1,16 @@
 import request from 'supertest';
 import app from '../app';
-import { getDb, writeDb } from '../utils/testUtils';
-import { Team } from '../types/team';
+import DataBase from '../db';
+
+import type { Team } from '../types/team';
 
 let initialDb: Team[] = null;
 
-beforeAll(async () => initialDb = [...await getDb<Team[]>('/teams')]);
-afterAll(async () => await writeDb('/teams', initialDb));
+beforeAll(async () => {
+  DataBase.getInstance();
+  initialDb = [...await DataBase.getTeams()]
+});
+afterAll(async () => await DataBase.writeTeams(initialDb));
 
 describe('GET /teams', () => {
   it('should respond with 200 success', async () => {
