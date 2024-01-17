@@ -1,14 +1,18 @@
 import { Response, NextFunction } from 'express';
-import { RequestWithID } from '../types/shared';
-import db from '../db';
+
+import DataBase from '../db';
+import type { Team } from '../types/team';
+import type { RequestWithID } from '../types/shared';
 
 async function checkIfTeamExists (req: RequestWithID, res: Response, next: NextFunction) {
   const id: number = Number(req.params.id);
-  const index: number = await db.getIndex('/teams', id, 'id');
-  if (index === -1) {
-    return res.status(404).json({ error: 'Team not found' });
+  try {
+    const [index, team]: [number, Team] = await DataBase.getTeamById(id);
+    req.index = index;
+    req.entity = team;
+  } catch (error) {
+    return res.status(404).json({ error: error.message });
   }
-  req.index = index;
   next();
 }
 
