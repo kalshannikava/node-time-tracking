@@ -9,7 +9,7 @@ async function checkIfUserExists (req: RequestWithID, res: Response, next: NextF
   const id: number = Number(req.params.id);
   try {
     const [index, user]: [number, User] = await DataBase.getUserById(id);
-    req.user = user;
+    req.entity = user;
     req.index = index;
   } catch (error) {
     return res.status(404).json({ error: error.message });
