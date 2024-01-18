@@ -2,6 +2,7 @@ import { join } from 'path';
 import { JsonDB, Config } from 'node-json-db';
 import type { User } from '../types/user';
 import type { Team } from '../types/team';
+import type { WorkPeriod } from '../types/workPeriod';
 
 const filename: string = join(__dirname, 'db.json');
 
@@ -92,6 +93,43 @@ class DataBase {
       throw new Error('Team not found');
     }
     return [index, await DataBase.getTeam(index)];
+  }
+
+  /* Work Periods */
+  public static async writeWorkPeriods (data: WorkPeriod[]): Promise<void> {
+    return await this.db.push('/workPeriods', data);
+  }
+
+  public static async getWorkPeriods (): Promise<WorkPeriod[]> {
+    return await this.db.getObject<WorkPeriod[]>('/workPeriods');
+  }
+
+  public static async getWorkPeriod (index: number): Promise<WorkPeriod> {
+    return await this.db.getObject<WorkPeriod>(`/workPeriods[${index}]`)
+  }
+
+  public static async addWorkPeriod (workPeriod: WorkPeriod): Promise<void> {
+    return await this.db.push('/workPeriods[]', workPeriod);
+  }
+
+  public static async deleteWorkPeriod (index: number): Promise<void> {
+    return await this.db.delete(`/workPeriods[${index}]`);
+  }
+
+  public static async updateWorkPeriod (index: number, updatedWorkPeriod: WorkPeriod): Promise<void> {
+    return await this.db.push(`/workPeriods[${index}]`, updatedWorkPeriod, true);
+  }
+
+  public static async getWorkPeriodIndexById (id: number): Promise<number> {
+    return await this.db.getIndex('/workPeriods', id, 'id');
+  }
+
+  public static async getWorkPeriodById (id: number): Promise<[number, WorkPeriod]> {
+    const index: number = await this.db.getIndex('/workPeriods', id, 'id');
+    if (index === -1) {
+      throw new Error('Work period not found');
+    }
+    return [index, await DataBase.getWorkPeriod(index)];
   }
 }
 
