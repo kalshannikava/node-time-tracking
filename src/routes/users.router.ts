@@ -1,18 +1,23 @@
 import { Router } from 'express';
-import { createUser, deleteUser, getUser, getUsers, updateUser } from '../controllers/users.controller';
-import { checkIfUserExists, validateEmail } from '../middleware/users.middleware';
 
-const usersRouter: Router = Router();
+import type UsersMiddleware from '../middleware/users.middleware';
+import type UsersController from '../controllers/users.controller';
 
-// Validation
-usersRouter.use('/:id', checkIfUserExists);
-usersRouter.use('/', validateEmail);
+function usersRouter (usersController: UsersController, usersMiddleware: UsersMiddleware): Router {
+  const router: Router = Router();
 
-// Routes
-usersRouter.get('/', getUsers);
-usersRouter.get('/:id', getUser);
-usersRouter.post('/', createUser);
-usersRouter.delete('/:id', deleteUser);
-usersRouter.put('/:id', updateUser);
+  // Validation
+  router.use('/:id', usersMiddleware.checkIfUserExists.bind(usersMiddleware));
+  router.use('/', usersMiddleware.validateEmail.bind(usersMiddleware));
+
+  // Routes
+  router.get('/', usersController.getUsers.bind(usersController));
+  router.get('/:id', usersController.getUser.bind(usersController));
+  router.post('/', usersController.createUser.bind(usersController));
+  router.delete('/:id', usersController.deleteUser.bind(usersController));
+  router.put('/:id', usersController.updateUser.bind(usersController));
+
+  return router;
+}
 
 export default usersRouter;

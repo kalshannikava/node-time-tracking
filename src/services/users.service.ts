@@ -1,13 +1,19 @@
-import DataBase from '../db';
+import type DataBase from '../db';
 import type { CreateUserData, UpdateUserData, User } from '../types/user';
 
 class UserService {
-  public static async getUsers (): Promise<User[]> {
-    return await DataBase.getUsers();
+  private database: DataBase;
+
+  constructor (database: DataBase) {
+    this.database = database;
   }
 
-  public static async createUser (userData: CreateUserData): Promise<User> {
-    const lastUser: User = await DataBase.getUser(-1);
+  public async getUsers (): Promise<User[]> {
+    return await this.database.getUsers();
+  }
+
+  public async createUser (userData: CreateUserData): Promise<User> {
+    const lastUser: User = await this.database.getUser(-1);
     const user: User = {
       ...userData,
       id: lastUser.id + 1,
@@ -15,23 +21,20 @@ class UserService {
     if (!user.email || !user.name || !user.timezone) {
       throw new Error('Missing required property');
     }
-    await DataBase.addUser(user);
+    await this.database.addUser(user);
     return user;
   }
 
-  public static async deleteUser (index: number): Promise<void> {
-    await DataBase.deleteUser(index);
+  public async deleteUser (index: number): Promise<void> {
+    await this.database.deleteUser(index);
   }
 
-  public static async updateUser (index: number, user: User, newUserData: UpdateUserData): Promise<User> {
-    const { name, email, timezone } = newUserData;
+  public async updateUser (index: number, user: User, newUserData: UpdateUserData): Promise<User> {
     const updatedUser: User = {
       ...user,
-      ...name && { name },
-      ...email && { email },
-      ...timezone && { timezone },
+      ...newUserData,
     };
-    await DataBase.updateUser(index, updatedUser);
+    await this.database.updateUser(index, updatedUser);
     return updatedUser;
   }
 }
