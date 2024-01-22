@@ -21,77 +21,77 @@ class DataBase {
   }
 
   /* Users */
-  public static async writeUsers (data: User[]): Promise<void> {
-    return await this.db.push('/users', data);
+  public async writeUsers (data: User[]): Promise<void> {
+    return await DataBase.db.push('/users', data);
   }
 
-  public static async getUsers (): Promise<User[]> {
-    return await this.db.getObject<User[]>('/users');
+  public async getUsers (): Promise<User[]> {
+    return await DataBase.db.getObject<User[]>('/users');
   }
 
-  public static async getUser (index: number): Promise<User> {
-    return await this.db.getObject<User>(`/users[${index}]`)
+  public async getUser (index: number): Promise<User> {
+    return await DataBase.db.getObject<User>(`/users[${index}]`)
   }
 
-  public static async addUser (user: User): Promise<void> {
-    return await this.db.push('/users[]', user);
+  public async addUser (user: User): Promise<void> {
+    return await DataBase.db.push('/users[]', user);
   }
 
-  public static async deleteUser (index: number): Promise<void> {
-    return await this.db.delete(`/users[${index}]`);
+  public async deleteUser (index: number): Promise<void> {
+    return await DataBase.db.delete(`/users[${index}]`);
   }
 
-  public static async updateUser (index: number, updatedUser: User): Promise<void> {
-    return await this.db.push(`/users[${index}]`, updatedUser, true);
+  public async updateUser (index: number, updatedUser: User): Promise<void> {
+    return await DataBase.db.push(`/users[${index}]`, updatedUser, true);
   }
 
-  public static async getUserIndexById (id: number): Promise<number> {
-    return await this.db.getIndex('/users', id, 'id');
+  public async getUserIndexById (id: number): Promise<number> {
+    return await DataBase.db.getIndex('/users', id, 'id');
   }
 
-  public static async getUserById (id: number): Promise<[number, User]> {
-    const index: number = await this.db.getIndex('/users', id, 'id');
+  public async getUserById (id: number): Promise<[number, User]> {
+    const index: number = await DataBase.db.getIndex('/users', id, 'id');
     if (index === -1) {
       throw new Error('User not found');
     }
-    return [index, await DataBase.getUser(index)];
+    return [index, await this.getUser(index)];
   }
 
   /* Teams */
-  public static async writeTeams (data: Team[]): Promise<void> {
-    return await this.db.push('/teams', data);
+  public async writeTeams (data: Team[]): Promise<void> {
+    return await DataBase.db.push('/teams', data);
   }
 
-  public static async getTeams (): Promise<Team[]> {
-    return await this.db.getObject<Team[]>('/teams');
+  public async getTeams (): Promise<Team[]> {
+    return await DataBase.db.getObject<Team[]>('/teams');
   }
 
-  public static async getTeam (index: number): Promise<Team> {
-    return await this.db.getObject<Team>(`/teams[${index}]`)
+  public async getTeam (index: number): Promise<Team> {
+    return await DataBase.db.getObject<Team>(`/teams[${index}]`)
   }
 
-  public static async addTeam (team: Team): Promise<void> {
-    return await this.db.push('/teams[]', team);
+  public async addTeam (team: Team): Promise<void> {
+    return await DataBase.db.push('/teams[]', team);
   }
 
-  public static async deleteTeam (index: number): Promise<void> {
-    return await this.db.delete(`/teams[${index}]`);
+  public async deleteTeam (index: number): Promise<void> {
+    return await DataBase.db.delete(`/teams[${index}]`);
   }
 
-  public static async updateTeam (index: number, updatedTeam: Team): Promise<void> {
-    return await this.db.push(`/teams[${index}]`, updatedTeam, true);
+  public async updateTeam (index: number, updatedTeam: Team): Promise<void> {
+    return await DataBase.db.push(`/teams[${index}]`, updatedTeam, true);
   }
 
-  public static async getTeamIndexById (id: number): Promise<number> {
-    return await this.db.getIndex('/teams', id, 'id');
+  public async getTeamIndexById (id: number): Promise<number> {
+    return await DataBase.db.getIndex('/teams', id, 'id');
   }
 
-  public static async getTeamById (id: number): Promise<[number, Team]> {
-    const index: number = await this.db.getIndex('/teams', id, 'id');
+  public async getTeamById (id: number): Promise<[number, Team]> {
+    const index: number = await DataBase.db.getIndex('/teams', id, 'id');
     if (index === -1) {
       throw new Error('Team not found');
     }
-    return [index, await DataBase.getTeam(index)];
+    return [index, await this.getTeam(index)];
   }
 }
 
