@@ -21,5 +21,3 @@ export interface UpdateUserRequest extends RequestWithID {
 }
 
 export interface DeleteUserRequest extends RequestWithID {}
-export { RequestWithID };
-
