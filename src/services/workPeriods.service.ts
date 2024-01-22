@@ -1,13 +1,19 @@
-import DataBase from '../db';
+import type DataBase from '../db';
 import type { CreateWorkPeriodData, UpdateWorkPeriodData, WorkPeriod } from '../types/workPeriod';
 
-class WorkPeriodService {
-  public static async getWorkPeriods(): Promise<WorkPeriod[]> {
-    return await DataBase.getWorkPeriods();
+class WorkPeriodsService {
+  private database: DataBase;
+
+  constructor (database: DataBase) {
+    this.database = database;
   }
 
-  public static async createWorkPeriod (workPeriodData: CreateWorkPeriodData): Promise<WorkPeriod> {
-    const lastWorkPeriod: WorkPeriod = await DataBase.getWorkPeriod(-1);
+  public async getWorkPeriods(): Promise<WorkPeriod[]> {
+    return await this.database.getWorkPeriods();
+  }
+
+  public async createWorkPeriod (workPeriodData: CreateWorkPeriodData): Promise<WorkPeriod> {
+    const lastWorkPeriod: WorkPeriod = await this.database.getWorkPeriod(-1);
     const workPeriod: WorkPeriod = {
       ...workPeriodData,
       id: lastWorkPeriod.id + 1,
@@ -15,22 +21,22 @@ class WorkPeriodService {
     if (!workPeriod.from || !workPeriod.to || !workPeriod.weekDays || !workPeriod.teamId || !workPeriod.userId) {
       throw new Error('Missing required property');
     }
-    await DataBase.addWorkPeriod(workPeriod);
+    await this.database.addWorkPeriod(workPeriod);
     return workPeriod;
   }
 
-  public static async deleteWorkPeriod (index: number): Promise<void> {
-    await DataBase.deleteWorkPeriod(index);
+  public async deleteWorkPeriod (index: number): Promise<void> {
+    await this.database.deleteWorkPeriod(index);
   }
 
-  public static async updateWorkPeriod (index: number, workPeriod: WorkPeriod, newWorkPeriodData: UpdateWorkPeriodData): Promise<WorkPeriod> {
+  public async updateWorkPeriod (index: number, workPeriod: WorkPeriod, newWorkPeriodData: UpdateWorkPeriodData): Promise<WorkPeriod> {
     const updatedWorkPeriod: WorkPeriod = {
       ...workPeriod,
       ...newWorkPeriodData,
     };
-    await DataBase.updateWorkPeriod(index, updatedWorkPeriod);
+    await this.database.updateWorkPeriod(index, updatedWorkPeriod);
     return updatedWorkPeriod;
   }
 }
 
-export default WorkPeriodService;
+export default WorkPeriodsService;

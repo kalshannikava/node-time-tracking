@@ -1,40 +1,43 @@
 import { Request, Response } from 'express';
 
-import WorkPeriodService from '../services/workPeriods.service';
+import type WorkPeriodService from '../services/workPeriods.service';
 import type { CreateWorkPeriodRequest, DeleteWorkPeriodRequest, GetWorkPeriodRequest, UpdateWorkPeriodRequest, WorkPeriod } from '../types/workPeriod';
 
-async function getWorkPeriod (req: GetWorkPeriodRequest, res: Response) {
-  return res.status(200).json(req.entity);
-}
+class WorkPeriodsController {
+  private workPeriodsService: WorkPeriodService;
 
-async function getWorkPeriods (_req: Request, res: Response) {
-  const data: WorkPeriod[] = await WorkPeriodService.getWorkPeriods();
-  return res.status(200).json(data);
-}
+  constructor (workPeriodsService: WorkPeriodService) {
+    this.workPeriodsService = workPeriodsService;
+  }
 
-async function createWorkPeriod (req: CreateWorkPeriodRequest, res: Response) {
-  try {
-    const workPeriod: WorkPeriod = await WorkPeriodService.createWorkPeriod(req.body);
-    return res.status(201).json(workPeriod);
-  } catch (error) {
-    return res.status(400).json({ error: error. message });
+  public async getWorkPeriod (req: GetWorkPeriodRequest, res: Response) {
+    return res.status(200).json(req.entity);
+  }
+
+  public async getWorkPeriods (_req: Request, res: Response) {
+    const data: WorkPeriod[] = await this.workPeriodsService.getWorkPeriods();
+    return res.status(200).json(data);
+  }
+
+  public async createWorkPeriod (req: CreateWorkPeriodRequest, res: Response) {
+    try {
+      const workPeriod: WorkPeriod = await this.workPeriodsService.createWorkPeriod(req.body);
+      return res.status(201).json(workPeriod);
+    } catch (error) {
+      return res.status(400).json({ error: error. message });
+    }
+  }
+
+  public async deleteWorkPeriod (req: DeleteWorkPeriodRequest, res: Response) {
+    await this.workPeriodsService.deleteWorkPeriod(req.index);
+    return res.status(200).json(req.entity);
+  }
+
+  public async updateWorkPeriod (req: UpdateWorkPeriodRequest, res: Response) {
+    const updatedWorkPeriod: WorkPeriod = await this.workPeriodsService.updateWorkPeriod(req.index, req.entity as WorkPeriod, req.body);
+    return res.status(200).json(updatedWorkPeriod);
   }
 }
 
-async function deleteWorkPeriod (req: DeleteWorkPeriodRequest, res: Response) {
-  await WorkPeriodService.deleteWorkPeriod(req.index);
-  return res.status(200).json(req.entity);
-}
 
-async function updateWorkPeriod (req: UpdateWorkPeriodRequest, res: Response) {
-  const updatedWorkPeriod: WorkPeriod = await WorkPeriodService.updateWorkPeriod(req.index, req.entity as WorkPeriod, req.body);
-  return res.status(200).json(updatedWorkPeriod);
-}
-
-export {
-  getWorkPeriod,
-  getWorkPeriods,
-  createWorkPeriod,
-  deleteWorkPeriod,
-  updateWorkPeriod,
-}
+export default WorkPeriodsController;

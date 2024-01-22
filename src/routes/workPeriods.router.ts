@@ -1,19 +1,23 @@
 import { Router } from 'express';
 
-import { getWorkPeriods, getWorkPeriod, createWorkPeriod, deleteWorkPeriod, updateWorkPeriod } from '../controllers/workPeriods.controller';
-import { checkIfTeamOrUserExist, checkIfWorkPeriodExists } from '../middleware/workPeriod.middleware';
+import type WorkPeriodsController from '../controllers/workPeriods.controller';
+import type WorkPeriodsMiddleware from '../middleware/workPeriod.middleware';
 
-const workPeriodsRouter: Router = Router();
+function workPeriodsRouter (workPeriodsController: WorkPeriodsController, workPeriodsMiddleware: WorkPeriodsMiddleware): Router {
+  const router: Router = Router();
 
-// Validation
-workPeriodsRouter.use('/:id', checkIfWorkPeriodExists);
-workPeriodsRouter.use('/', checkIfTeamOrUserExist);
+  // Validation
+  router.use('/:id', workPeriodsMiddleware.checkIfWorkPeriodExists.bind(workPeriodsMiddleware));
+  router.use('/', workPeriodsMiddleware.checkIfTeamOrUserExist.bind(workPeriodsMiddleware));
 
-// Routes
-workPeriodsRouter.get('/', getWorkPeriods);
-workPeriodsRouter.get('/:id', getWorkPeriod);
-workPeriodsRouter.post('/', createWorkPeriod);
-workPeriodsRouter.delete('/:id', deleteWorkPeriod);
-workPeriodsRouter.put('/:id', updateWorkPeriod);
+  // Routes
+  router.get('/', workPeriodsController.getWorkPeriods.bind(workPeriodsController));
+  router.get('/:id', workPeriodsController.getWorkPeriod.bind(workPeriodsController));
+  router.post('/', workPeriodsController.createWorkPeriod.bind(workPeriodsController));
+  router.delete('/:id', workPeriodsController.deleteWorkPeriod.bind(workPeriodsController));
+  router.put('/:id', workPeriodsController.updateWorkPeriod.bind(workPeriodsController)); 
+
+  return router;
+}
 
 export default workPeriodsRouter;

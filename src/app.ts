@@ -9,6 +9,9 @@ import UsersController from './controllers/users.controller';
 import TeamsController from './controllers/teams.controller';
 import TeamsMiddleware from './middleware/teams.middleware';
 import TeamsService from './services/teams.service';
+import WorkPeriodsController from './controllers/workPeriods.controller';
+import WorkPeriodsMiddleware from './middleware/workPeriod.middleware';
+import WorkPeriodsService from './services/workPeriods.service';
 
 const app: Express = express();
 
@@ -22,8 +25,12 @@ const teamsService: TeamsService = new TeamsService(db);
 const teamsMiddleware: TeamsMiddleware = new TeamsMiddleware(db);
 const teamsController: TeamsController = new TeamsController(teamsService);
 
+const workPeriodsService: WorkPeriodsService = new WorkPeriodsService(db);
+const workPeriodsMiddleware: WorkPeriodsMiddleware = new WorkPeriodsMiddleware(db);
+const workPeriodsController: WorkPeriodsController = new WorkPeriodsController(workPeriodsService);
+
 app.use(express.json()); // parse body to json
-app.use('/workPeriods', workPeriodsRouter)
+app.use('/workPeriods', workPeriodsRouter(workPeriodsController, workPeriodsMiddleware));
 app.use('/teams', teamsRouter(teamsController, teamsMiddleware));
 app.use('/users', usersRouter(usersController, usersMiddleware));
 

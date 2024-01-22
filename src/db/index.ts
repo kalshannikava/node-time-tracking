@@ -96,40 +96,40 @@ class DataBase {
   }
 
   /* Work Periods */
-  public static async writeWorkPeriods (data: WorkPeriod[]): Promise<void> {
-    return await this.db.push('/workPeriods', data);
+  public async writeWorkPeriods (data: WorkPeriod[]): Promise<void> {
+    return await DataBase.db.push('/workPeriods', data);
   }
 
-  public static async getWorkPeriods (): Promise<WorkPeriod[]> {
-    return await this.db.getObject<WorkPeriod[]>('/workPeriods');
+  public async getWorkPeriods (): Promise<WorkPeriod[]> {
+    return await DataBase.db.getObject<WorkPeriod[]>('/workPeriods');
   }
 
-  public static async getWorkPeriod (index: number): Promise<WorkPeriod> {
-    return await this.db.getObject<WorkPeriod>(`/workPeriods[${index}]`)
+  public async getWorkPeriod (index: number): Promise<WorkPeriod> {
+    return await DataBase.db.getObject<WorkPeriod>(`/workPeriods[${index}]`)
   }
 
-  public static async addWorkPeriod (workPeriod: WorkPeriod): Promise<void> {
-    return await this.db.push('/workPeriods[]', workPeriod);
+  public async addWorkPeriod (workPeriod: WorkPeriod): Promise<void> {
+    return await DataBase.db.push('/workPeriods[]', workPeriod);
   }
 
-  public static async deleteWorkPeriod (index: number): Promise<void> {
-    return await this.db.delete(`/workPeriods[${index}]`);
+  public async deleteWorkPeriod (index: number): Promise<void> {
+    return await DataBase.db.delete(`/workPeriods[${index}]`);
   }
 
-  public static async updateWorkPeriod (index: number, updatedWorkPeriod: WorkPeriod): Promise<void> {
-    return await this.db.push(`/workPeriods[${index}]`, updatedWorkPeriod, true);
+  public async updateWorkPeriod (index: number, updatedWorkPeriod: WorkPeriod): Promise<void> {
+    return await DataBase.db.push(`/workPeriods[${index}]`, updatedWorkPeriod, true);
   }
 
-  public static async getWorkPeriodIndexById (id: number): Promise<number> {
-    return await this.db.getIndex('/workPeriods', id, 'id');
+  public async getWorkPeriodIndexById (id: number): Promise<number> {
+    return await DataBase.db.getIndex('/workPeriods', id, 'id');
   }
 
-  public static async getWorkPeriodById (id: number): Promise<[number, WorkPeriod]> {
-    const index: number = await this.db.getIndex('/workPeriods', id, 'id');
+  public async getWorkPeriodById (id: number): Promise<[number, WorkPeriod]> {
+    const index: number = await DataBase.db.getIndex('/workPeriods', id, 'id');
     if (index === -1) {
       throw new Error('Work period not found');
     }
-    return [index, await DataBase.getWorkPeriod(index)];
+    return [index, await this.getWorkPeriod(index)];
   }
 }
 
