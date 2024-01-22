@@ -1,40 +1,43 @@
 import { Request, Response } from 'express';
 
-import UserService from '../services/users.service';
+import type UserService from '../services/users.service';
 import type { CreateUserRequest, DeleteUserRequest, GetUserRequest, UpdateUserRequest, User } from '../types/user';
 
-async function getUsers (_req: Request, res: Response) {
-  const data: User[] = await UserService.getUsers();
-  return res.status(200).json(data);
-}
+class UsersController {
+  private userService: UserService;
 
-async function getUser (req: GetUserRequest, res: Response) {
-  return res.status(200).json(req.user);
-}
+  constructor (userService: UserService) {
+    this.userService = userService;
+  }
 
-async function createUser (req: CreateUserRequest, res: Response) {
-  try {
-    const user: User = await UserService.createUser(req.body);
-    return res.status(201).json(user);
-  } catch (error) {
-    return res.status(400).json({ error: error.message });
+  public async getUsers (_req: Request, res: Response) {
+    const data: User[] = await this.userService.getUsers();
+    return res.status(200).json(data);
+  }
+  
+  public async getUser (req: GetUserRequest, res: Response) {
+    return res.status(200).json(req.user);
+  }
+  
+  public async createUser (req: CreateUserRequest, res: Response) {
+    try {
+      const user: User = await this.userService.createUser(req.body);
+      return res.status(201).json(user);
+    } catch (error) {
+      return res.status(400).json({ error: error.message });
+    }
+  }
+  
+  public async deleteUser (req: DeleteUserRequest, res: Response) {
+    await this.userService.deleteUser(req.index);
+    return res.status(200).json(req.user);
+  }
+  
+  public async updateUser (req: UpdateUserRequest, res: Response) {
+    const updatedUser: User = await this.userService.updateUser(req.index, req.user, req.body);
+    res.status(200).json(updatedUser);
   }
 }
 
-async function deleteUser (req: DeleteUserRequest, res: Response) {
-  await UserService.deleteUser(req.index);
-  return res.status(200).json(req.user);
-}
 
-async function updateUser (req: UpdateUserRequest, res: Response) {
-  const updatedUser: User = await UserService.updateUser(req.index, req.user, req.body);
-  res.status(200).json(updatedUser);
-}
-
-export {
-  getUsers,
-  getUser,
-  createUser,
-  deleteUser,
-  updateUser,
-}
+export default UsersController;
