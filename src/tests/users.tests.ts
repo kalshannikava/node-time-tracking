@@ -7,9 +7,9 @@ let initialDb: User[] = null;
 
 beforeAll(async () => {
   DataBase.getInstance();
-  initialDb = [...await DataBase.getUsers()]
+  initialDb = [...await DataBase.getInstance().getUsers()]
 });
-afterAll(async () => await DataBase.writeUsers(initialDb));
+afterAll(async () => await DataBase.getInstance().writeUsers(initialDb));
 
 describe('GET /users', () => {
   it('should respond with 200 success', async () => {
