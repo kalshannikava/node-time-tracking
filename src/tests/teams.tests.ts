@@ -8,9 +8,9 @@ let initialDb: Team[] = null;
 
 beforeAll(async () => {
   DataBase.getInstance();
-  initialDb = [...await DataBase.getTeams()]
+  initialDb = [...await DataBase.getInstance().getTeams()]
 });
-afterAll(async () => await DataBase.writeTeams(initialDb));
+afterAll(async () => await DataBase.getInstance().writeTeams(initialDb));
 
 describe('GET /teams', () => {
   it('should respond with 200 success', async () => {
