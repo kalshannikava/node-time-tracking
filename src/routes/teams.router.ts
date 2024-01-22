@@ -1,17 +1,21 @@
 import { Router } from 'express';
-import { createTeam, deleteTeam, getTeam, getTeams, updateTeam } from '../controllers/teams.controller';
-import { checkIfTeamExists } from '../middleware/teams.middleware';
+import type TeamsController from '../controllers/teams.controller';
+import type TeamsMiddleware from '../middleware/teams.middleware';
 
-const teamsRouter: Router = Router();
+function teamsRouter (teamsController: TeamsController, teamsMiddleware: TeamsMiddleware): Router {
+  const router: Router = Router();
 
-// Validation
-teamsRouter.use('/:id', checkIfTeamExists);
+  // Validation
+  router.use('/:id', teamsMiddleware.checkIfTeamExists.bind(teamsMiddleware));
 
-// Routes
-teamsRouter.get('/', getTeams);
-teamsRouter.get('/:id', getTeam);
-teamsRouter.post('/', createTeam);
-teamsRouter.put('/:id', updateTeam);
-teamsRouter.delete('/:id', deleteTeam);
+  // Routes
+  router.get('/', teamsController.getTeams.bind(teamsController));
+  router.get('/:id', teamsController.getTeam.bind(teamsController));
+  router.post('/', teamsController.createTeam.bind(teamsController));
+  router.put('/:id', teamsController.updateTeam.bind(teamsController));
+  router.delete('/:id', teamsController.deleteTeam.bind(teamsController));
+
+  return router;
+}
 
 export default teamsRouter;
