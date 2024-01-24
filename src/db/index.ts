@@ -5,22 +5,10 @@ import type { User } from '../types/user';
 const filename: string = join(__dirname, 'db.json');
 
 class DataBase {
-  private static instance: DataBase;
   private static db: JsonDB;
 
-  private constructor () {
+  constructor () {
     DataBase.db = new JsonDB(new Config(filename, true, true, '/'));
-  }
-
-  public static getInstance (): DataBase {
-    if (!DataBase.instance) {
-      DataBase.instance = new DataBase();
-    }
-    return DataBase.instance;
-  }
-
-  public async writeUsers (data: User[]): Promise<void> {
-    return await DataBase.db.push('/users', data);
   }
 
   public async getUsers (): Promise<User[]> {
