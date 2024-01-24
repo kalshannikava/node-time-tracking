@@ -8,11 +8,11 @@ class UserService {
     this.database = database;
   }
 
-  public async getUsers (): Promise<User[]> {
-    return await this.database.getUsers();
+  public async getAll (): Promise<User[]> {
+    return this.database.getUsers();
   }
 
-  public async createUser (userData: CreateUserData): Promise<User> {
+  public async create (userData: CreateUserData): Promise<User> {
     const lastUser: User = await this.database.getUser(-1);
     const user: User = {
       ...userData,
@@ -25,11 +25,11 @@ class UserService {
     return user;
   }
 
-  public async deleteUser (index: number): Promise<void> {
-    await this.database.deleteUser(index);
+  public async delete (index: number): Promise<void> {
+    return this.database.deleteUser(index);
   }
 
-  public async updateUser (index: number, user: User, newUserData: UpdateUserData): Promise<User> {
+  public async update (index: number, user: User, newUserData: UpdateUserData): Promise<User> {
     const updatedUser: User = {
       ...user,
       ...newUserData,
