@@ -1,46 +1,38 @@
-import { join } from 'path';
 import { JsonDB, Config } from 'node-json-db';
-import type { User } from '../types/user';
-
-const filename: string = join(__dirname, 'db.json');
 
 class DataBase {
-  private static db: JsonDB;
+  private db: JsonDB;
 
-  constructor () {
-    DataBase.db = new JsonDB(new Config(filename, true, true, '/'));
+  constructor (filename: string) {
+    this.db = new JsonDB(new Config(filename, true, true, '/'));
   }
 
-  public async getUsers (): Promise<User[]> {
-    return await DataBase.db.getObject<User[]>('/users');
+  public async getAll<T> (collection: string): Promise<T[]> {
+    return this.db.getObject<T[]>(`/${collection}`);
   }
 
-  public async getUser (index: number): Promise<User> {
-    return await DataBase.db.getObject<User>(`/users[${index}]`)
+  public async get<T> (collection: string, index: number): Promise<T> {
+    return this.db.getObject<T>(`/${collection}[${index}]`);
   }
 
-  public async addUser (user: User): Promise<void> {
-    return await DataBase.db.push('/users[]', user);
+  public async create<T> (collection: string, entity: T): Promise<void> {
+    return this.db.push(`/${collection}[]`, entity);
   }
 
-  public async deleteUser (index: number): Promise<void> {
-    return await DataBase.db.delete(`/users[${index}]`);
+  public async delete (collection: string, index: number): Promise<void> {
+    return this.db.delete(`/${collection}[${index}]`);
   }
 
-  public async updateUser (index: number, updatedUser: User): Promise<void> {
-    return await DataBase.db.push(`/users[${index}]`, updatedUser, true);
+  public async update<T> (collection: string, index: number, updatedEntity: T): Promise<void> {
+    return this.db.push(`/${collection}[${index}]`, updatedEntity, true);
   }
 
-  public async getUserIndexById (id: number): Promise<number> {
-    return await DataBase.db.getIndex('/users', id, 'id');
+  public async getIndex (collection: string, id: number): Promise<number> {
+    return await this.db.getIndex(`/${collection}`, id, 'id');
   }
 
-  public async getUserById (id: number): Promise<[number, User]> {
-    const index: number = await DataBase.db.getIndex('/users', id, 'id');
-    if (index === -1) {
-      throw new Error('User not found');
-    }
-    return [index, await this.getUser(index)];
+  public async writeAll<T> (collection: string, data: T[]): Promise<void> {
+    return await this.db.push(`/${collection}`, data);
   }
 }
 

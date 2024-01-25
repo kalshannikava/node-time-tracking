@@ -1,32 +1,36 @@
-import { Config, JsonDB } from 'node-json-db';
+import DataBase from '../db';
 
 class BaseRepository<T> {
   private collection: string;
-  private db: JsonDB;
+  private db: DataBase;
 
-  constructor (collection: string, filename) {
+  constructor (collection: string, db: DataBase) {
     this.collection = collection;
-    this.db = new JsonDB(new Config(filename, true, true, '/'));
+    this.db = db;
   }
 
   public async getAll (): Promise<T[]> {
-    return this.db.getObject<T[]>(`/${this.collection}`);
+    return this.db.getAll(this.collection);
   }
 
   public async get (index: number): Promise<T> {
-    return this.db.getObject<T>(`/${this.collection}[${index}]`)
+    return this.db.get(this.collection, index);
   }
 
   public async create (entity: T): Promise<void> {
-    return this.db.push(`/${this.collection}[]`, entity);
+    return this.db.create(this.collection, entity);
   }
 
   public async delete (index: number): Promise<void> {
-    return this.db.delete(`/${this.collection}[${index}]`);
+    return this.db.delete(this.collection, index);
   }
 
   public async update (index: number, updatedEntity: T): Promise<void> {
-    return this.db.push(`/${this.collection}[${index}]`, updatedEntity, true);
+    return this.db.update(this.collection, index, updatedEntity);
+  }
+
+  public async getIndex (id: number): Promise<number> {
+    return await this.db.getIndex(this.collection, id);
   }
 }
 
