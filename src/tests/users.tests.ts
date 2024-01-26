@@ -1,18 +1,10 @@
 import request from 'supertest';
 import type { Express } from 'express';
-import { join } from 'path';
 import app from '../app';
-import { User } from '../types/user';
-import DataBase from '../db';
+import MockDataBase from './mocks/mockDataBase';
 
-let initialDb: User[] = null;
-
-const filename: string = join(__dirname, '..', 'db', 'db.json');
-const db: DataBase = new DataBase(filename);
+const db: MockDataBase = new MockDataBase();
 const application: Express = app(db);
-
-beforeAll(async () => initialDb = [...await db.getAll<User>('users')]);
-afterAll(async () => await db.writeAll<User>('users', initialDb));
 
 describe('GET /users', () => {
   it('should respond with 200 success', async () => {

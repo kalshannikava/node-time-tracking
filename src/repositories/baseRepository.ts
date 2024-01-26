@@ -1,10 +1,10 @@
-import DataBase from '../db';
+import { DataBaseI } from '../types/database';
 
 class BaseRepository<T> {
   private collection: string;
-  private db: DataBase;
+  private db: DataBaseI;
 
-  constructor (collection: string, db: DataBase) {
+  constructor (collection: string, db: DataBaseI) {
     this.collection = collection;
     this.db = db;
   }
