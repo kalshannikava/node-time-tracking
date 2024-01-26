@@ -1,54 +1,36 @@
-import { join } from 'path';
 import { JsonDB, Config } from 'node-json-db';
-import type { User } from '../types/user';
 
-const filename: string = join(__dirname, 'db.json');
+import type { DataBaseI } from '../types/database';
 
-class DataBase {
-  private static instance: DataBase;
-  private static db: JsonDB;
+class DataBase implements DataBaseI {
+  private db: JsonDB;
 
-  private constructor () {
-    DataBase.db = new JsonDB(new Config(filename, true, true, '/'));
+  constructor (filename: string) {
+    this.db = new JsonDB(new Config(filename, true, true, '/'));
   }
 
-  public static getInstance (): DataBase {
-    if (!DataBase.instance) {
-      DataBase.instance = new DataBase();
-    }
-    return DataBase.instance;
+  async getAll<T> (collection: string): Promise<T[]> {
+    return this.db.getObject<T[]>(`/${collection}`);
   }
 
-  public async getUsers (): Promise<User[]> {
-    return await DataBase.db.getObject<User[]>('/users');
+  async get<T> (collection: string, index: number): Promise<T> {
+    return this.db.getObject<T>(`/${collection}[${index}]`);
   }
 
-  public async getUser (index: number): Promise<User> {
-    return await DataBase.db.getObject<User>(`/users[${index}]`)
+  async create<T> (collection: string, entity: T): Promise<void> {
+    return this.db.push(`/${collection}[]`, entity);
   }
 
-  public async addUser (user: User): Promise<void> {
-    return await DataBase.db.push('/users[]', user);
+  async delete (collection: string, index: number): Promise<void> {
+    return this.db.delete(`/${collection}[${index}]`);
   }
 
-  public async deleteUser (index: number): Promise<void> {
-    return await DataBase.db.delete(`/users[${index}]`);
+  async update<T> (collection: string, index: number, updatedEntity: T): Promise<void> {
+    return this.db.push(`/${collection}[${index}]`, updatedEntity, true);
   }
 
-  public async updateUser (index: number, updatedUser: User): Promise<void> {
-    return await DataBase.db.push(`/users[${index}]`, updatedUser, true);
-  }
-
-  public async getUserIndexById (id: number): Promise<number> {
-    return await DataBase.db.getIndex('/users', id, 'id');
-  }
-
-  public async getUserById (id: number): Promise<[number, User]> {
-    const index: number = await DataBase.db.getIndex('/users', id, 'id');
-    if (index === -1) {
-      throw new Error('User not found');
-    }
-    return [index, await this.getUser(index)];
+  async getIndex (collection: string, id: number): Promise<number> {
+    return await this.db.getIndex(`/${collection}`, id, 'id');
   }
 }
 
