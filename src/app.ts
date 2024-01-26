@@ -1,22 +1,14 @@
 import express, { Express } from 'express';
 
-import UserService from './services/users.service';
-import usersRouter from './routes/users.router';
-import UsersMiddleware from './middleware/users.middleware';
-import UsersController from './controllers/users.controller';
-import UserRepository from './repositories/userRepository';
-import type DataBase from './db';
+import type { DataBaseI } from './types/database';
 
-function app (db: DataBase): Express {
+// TODO: pass DB to repository
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function app (db: DataBaseI): Express {
+
   const application: Express = express();
 
-  const userRepository: UserRepository = new UserRepository(db);
-  const userService: UserService = new UserService(userRepository);
-  const usersMiddleware: UsersMiddleware = new UsersMiddleware(userRepository);
-  const usersController: UsersController = new UsersController(userService);
-
   application.use(express.json()); // parse body to json
-  application.use('/users', usersRouter(usersController, usersMiddleware));
 
   return application;
 }

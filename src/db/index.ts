@@ -1,38 +1,36 @@
 import { JsonDB, Config } from 'node-json-db';
 
-class DataBase {
+import type { DataBaseI } from '../types/database';
+
+class DataBase implements DataBaseI {
   private db: JsonDB;
 
   constructor (filename: string) {
     this.db = new JsonDB(new Config(filename, true, true, '/'));
   }
 
-  public async getAll<T> (collection: string): Promise<T[]> {
+  async getAll<T> (collection: string): Promise<T[]> {
     return this.db.getObject<T[]>(`/${collection}`);
   }
 
-  public async get<T> (collection: string, index: number): Promise<T> {
+  async get<T> (collection: string, index: number): Promise<T> {
     return this.db.getObject<T>(`/${collection}[${index}]`);
   }
 
-  public async create<T> (collection: string, entity: T): Promise<void> {
+  async create<T> (collection: string, entity: T): Promise<void> {
     return this.db.push(`/${collection}[]`, entity);
   }
 
-  public async delete (collection: string, index: number): Promise<void> {
+  async delete (collection: string, index: number): Promise<void> {
     return this.db.delete(`/${collection}[${index}]`);
   }
 
-  public async update<T> (collection: string, index: number, updatedEntity: T): Promise<void> {
+  async update<T> (collection: string, index: number, updatedEntity: T): Promise<void> {
     return this.db.push(`/${collection}[${index}]`, updatedEntity, true);
   }
 
-  public async getIndex (collection: string, id: number): Promise<number> {
+  async getIndex (collection: string, id: number): Promise<number> {
     return await this.db.getIndex(`/${collection}`, id, 'id');
-  }
-
-  public async writeAll<T> (collection: string, data: T[]): Promise<void> {
-    return await this.db.push(`/${collection}`, data);
   }
 }
 
