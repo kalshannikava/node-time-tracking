@@ -1,20 +1,14 @@
 import request from 'supertest';
+import type { Express } from 'express';
 import app from '../app';
-import DataBase from '../db';
+import MockDataBase from './mocks/mockDataBase';
 
-import type { Team } from '../types/team';
-
-let initialDb: Team[] = null;
-
-beforeAll(async () => {
-  DataBase.getInstance();
-  initialDb = [...await DataBase.getInstance().getTeams()]
-});
-afterAll(async () => await DataBase.getInstance().writeTeams(initialDb));
+const db: MockDataBase = new MockDataBase();
+const application: Express = app(db);
 
 describe('GET /teams', () => {
   it('should respond with 200 success', async () => {
-    await request(app).get('/teams')
+    await request(application).get('/teams')
     .expect('Content-Type', /json/)
     .expect(200);
   });
@@ -22,13 +16,13 @@ describe('GET /teams', () => {
 
 describe('GET /teams/id', () => {
   it('should respond with 200 success', async () => {
-    await request(app).get('/teams/0')
+    await request(application).get('/teams/0')
     .expect('Content-Type', /json/)
     .expect(200);
   });
 
   it('should respond with 404 not found when user doesn\'t exist', async () => {
-    await request(app).get('/teams/-1')
+    await request(application).get('/teams/-1')
     .expect(404);
   });
 });
@@ -36,18 +30,18 @@ describe('GET /teams/id', () => {
 
 describe('POST /teams', () => {
   it('should respond with 201 created', async () => {
-    await request(app).post('/teams')
+    await request(application).post('/teams')
     .send({ name: 'Test', logo: 'logo.png' })
     .expect('Content-Type', /json/)
     .expect(201);
   });
 
   it('should respond with 400 bad request when required property is missing', async () => {
-    await request(app).post('/teams')
+    await request(application).post('/teams')
     .send({ name: 'Test' })
     .expect(400);
 
-    await request(app).post('/teams')
+    await request(application).post('/teams')
     .send({ logo: 'logo.png' })
     .expect(400);
   });
@@ -55,14 +49,14 @@ describe('POST /teams', () => {
 
 describe('PUT /teams', () => {
   it('should respond with 200 success', async () => {
-    await request(app).put('/teams/0')
+    await request(application).put('/teams/0')
     .send({ name: 'Test 1', logo: 'logo1.png' })
     .expect('Content-Type', /json/)
     .expect(200);
   });
 
   it('should have been updated', async () => {
-    const response = await request(app).get('/teams/0')
+    const response = await request(application).get('/teams/0')
     .expect('Content-Type', /json/)
     .expect(200);
     expect(response.body.name).toEqual('Test 1');
@@ -72,18 +66,18 @@ describe('PUT /teams', () => {
 
 describe('DELETE /user', () => {
   it('should respond with 200 success', async () => {
-    await request(app).delete('/teams/0')
+    await request(application).delete('/teams/0')
     .expect('Content-Type', /json/)
     .expect(200);
   });
 
   it('should be deleted', async () => {
-    await request(app).get('/teams/0')
+    await request(application).get('/teams/0')
     .expect(404);
   });
 
   it('should respond with 404 not found when user doesn\'t exist', async () => {
-    await request(app).delete('/teams/-1')
+    await request(application).delete('/teams/-1')
     .expect(404);
   });
 });
