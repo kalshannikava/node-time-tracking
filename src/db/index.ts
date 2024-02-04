@@ -1,8 +1,8 @@
 import { JsonDB, Config } from 'node-json-db';
 
-import type { DataBaseI } from '../types/database';
+import type { DataBaseType } from '../types/database';
 
-class DataBase implements DataBaseI {
+class DataBase implements DataBaseType {
   private db: JsonDB;
 
   constructor (filename: string) {
