@@ -13,27 +13,27 @@ import WorkPeriodsMiddleware from './middleware/workPeriod.middleware';
 import UsersController from './controllers/users.controller';
 import TeamsController from './controllers/teams.controller';
 import WorkPeriodsController from './controllers/workPeriods.controller';
-import UserRepository from './repositories/users.repository';
-import TeamRepository from './repositories/teams.repository';
+import UsersRepository from './repositories/users.repository';
+import TeamsRepository from './repositories/teams.repository';
+import WorkPeriodsRepository from './repositories/workPeriods.repository';
 import type { DataBaseType } from './types/database';
-import WorkPeriodRepository from './repositories/workPeriods.repository';
 
 function app (db: DataBaseType): Express {
   const application: Express = express();
 
-  const userRepository: UserRepository = new UserRepository(db);
-  const userService: UserService = new UserService(userRepository);
-  const usersMiddleware: UsersMiddleware = new UsersMiddleware(userRepository);
+  const usersRepository: UsersRepository = new UsersRepository(db);
+  const userService: UserService = new UserService(usersRepository);
+  const usersMiddleware: UsersMiddleware = new UsersMiddleware(usersRepository);
   const usersController: UsersController = new UsersController(userService);
 
-  const teamRepository: TeamRepository = new TeamRepository(db);
-  const teamsService: TeamsService = new TeamsService(teamRepository);
-  const teamsMiddleware: TeamsMiddleware = new TeamsMiddleware(teamRepository);
+  const teamsRepository: TeamsRepository = new TeamsRepository(db);
+  const teamsService: TeamsService = new TeamsService(teamsRepository);
+  const teamsMiddleware: TeamsMiddleware = new TeamsMiddleware(teamsRepository);
   const teamsController: TeamsController = new TeamsController(teamsService);
 
-  const workPeriodRepository: WorkPeriodRepository = new WorkPeriodRepository(db);
-  const workPeriodsService: WorkPeriodsService = new WorkPeriodsService(workPeriodRepository);
-  const workPeriodsMiddleware: WorkPeriodsMiddleware = new WorkPeriodsMiddleware({ workPeriodRepository, teamRepository, userRepository });
+  const workPeriodsRepository: WorkPeriodsRepository = new WorkPeriodsRepository(db);
+  const workPeriodsService: WorkPeriodsService = new WorkPeriodsService(workPeriodsRepository);
+  const workPeriodsMiddleware: WorkPeriodsMiddleware = new WorkPeriodsMiddleware({ workPeriodsRepository, teamsRepository, usersRepository });
   const workPeriodsController: WorkPeriodsController = new WorkPeriodsController(workPeriodsService);
 
   application.use(express.json()); // parse body to json

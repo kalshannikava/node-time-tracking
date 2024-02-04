@@ -2,33 +2,33 @@ import { Response, NextFunction } from 'express';
 
 import type { CreateWorkPeriodRequest, UpdateWorkPeriodRequest, WorkPeriod } from '../types/workPeriod';
 import type { RequestWithID } from '../types/shared';
-import type WorkPeriodRepository from '../repositories/workPeriods.repository';
-import type UserRepository from '../repositories/users.repository';
-import type TeamRepository from '../repositories/teams.repository';
+import type WorkPeriodsRepository from '../repositories/workPeriods.repository';
+import type UsersRepository from '../repositories/users.repository';
+import type TeamsRepository from '../repositories/teams.repository';
 
 type Config = {
-  workPeriodRepository: WorkPeriodRepository,
-  userRepository: UserRepository,
-  teamRepository: TeamRepository,
+  workPeriodsRepository: WorkPeriodsRepository,
+  usersRepository: UsersRepository,
+  teamsRepository: TeamsRepository,
 }
 
 class WorkPeriodsMiddleware {
-  private workPeriodRepository: WorkPeriodRepository;
-  private userRepository: UserRepository;
-  private teamRepository: TeamRepository;
+  private workPeriodsRepository: WorkPeriodsRepository;
+  private usersRepository: UsersRepository;
+  private teamsRepository: TeamsRepository;
 
-  constructor ({ workPeriodRepository, userRepository, teamRepository }: Config) {
-    this.workPeriodRepository = workPeriodRepository;
-    this.userRepository = userRepository;
-    this.teamRepository = teamRepository;
+  constructor ({ workPeriodsRepository, usersRepository, teamsRepository }: Config) {
+    this.workPeriodsRepository = workPeriodsRepository;
+    this.usersRepository = usersRepository;
+    this.teamsRepository = teamsRepository;
   }
   public async checkIfWorkPeriodExists (req: RequestWithID, res: Response, next: NextFunction) {
     const id: number = Number(req.params.id);
-    const index: number = await this.workPeriodRepository.getIndex(id);
+    const index: number = await this.workPeriodsRepository.getIndex(id);
     if (index === -1) {
       return res.status(404).json({ error: 'Work period not found' });
     }
-    const workPeriod: WorkPeriod = await this.workPeriodRepository.get(index);
+    const workPeriod: WorkPeriod = await this.workPeriodsRepository.get(index);
     req.entity = workPeriod;
     req.index = index;
     next();
@@ -39,14 +39,14 @@ class WorkPeriodsMiddleware {
     const userId: number = Number(req.body.userId);
     
     if (userId) {
-      const userIndex: number = await this.userRepository.getIndex(userId);
+      const userIndex: number = await this.usersRepository.getIndex(userId);
       if (userIndex === -1) {
         return res.status(404).json({ error: 'User not found' });
       }
     }
 
     if (teamId) {
-      const teamIndex: number = await this.teamRepository.getIndex(teamId);
+      const teamIndex: number = await this.teamsRepository.getIndex(teamId);
       if (teamIndex === -1) {
         return res.status(404).json({ error: 'Team not found' });
       }

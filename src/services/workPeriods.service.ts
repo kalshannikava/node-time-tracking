@@ -1,9 +1,9 @@
 import BaseService from './baseService';
-import type WorkPeriodRepository from '../repositories/workPeriods.repository';
+import type WorkPeriodsRepository from '../repositories/workPeriods.repository';
 import type { CreateWorkPeriodData, UpdateWorkPeriodData, WorkPeriod } from '../types/workPeriod';
 
 class WorkPeriodsService extends BaseService<WorkPeriod, CreateWorkPeriodData, UpdateWorkPeriodData> {
-  constructor (repository: WorkPeriodRepository) {
+  constructor (repository: WorkPeriodsRepository) {
     super(repository);
   }
 

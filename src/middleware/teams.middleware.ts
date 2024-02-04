@@ -2,12 +2,12 @@ import { Response, NextFunction } from 'express';
 
 import type { Team } from '../types/team';
 import type { RequestWithID } from '../types/shared';
-import TeamRepository from '../repositories/teams.repository';
+import TeamsRepository from '../repositories/teams.repository';
 
 class TeamsMiddleware {
-  private teamsRepository: TeamRepository;
+  private teamsRepository: TeamsRepository;
 
-  constructor (teamsRepository: TeamRepository) {
+  constructor (teamsRepository: TeamsRepository) {
     this.teamsRepository = teamsRepository;
   }
 
