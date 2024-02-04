@@ -1,20 +1,21 @@
 import express, { Express } from 'express';
 
-import UserService from './services/users.service';
+
 import usersRouter from './routes/users.router';
 import teamsRouter from './routes/teams.router';
 import workPeriodsRouter from './routes/workPeriods.router';
+import UserService from './services/users.service';
+import TeamsService from './services/teams.service';
+import WorkPeriodsService from './services/workPeriods.service';
 import UsersMiddleware from './middleware/users.middleware';
+import TeamsMiddleware from './middleware/teams.middleware';
+import WorkPeriodsMiddleware from './middleware/workPeriod.middleware';
 import UsersController from './controllers/users.controller';
 import TeamsController from './controllers/teams.controller';
-import TeamsMiddleware from './middleware/teams.middleware';
-import TeamsService from './services/teams.service';
 import WorkPeriodsController from './controllers/workPeriods.controller';
-import WorkPeriodsMiddleware from './middleware/workPeriod.middleware';
-import WorkPeriodsService from './services/workPeriods.service';
-import UserRepository from './repositories/userRepository';
-import type { DataBaseType } from './types/database';
+import UserRepository from './repositories/users.repository';
 import TeamRepository from './repositories/teams.repository';
+import type { DataBaseType } from './types/database';
 
 function app (db: DataBaseType): Express {
   const application: Express = express();
