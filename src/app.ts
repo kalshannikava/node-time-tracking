@@ -16,6 +16,7 @@ import WorkPeriodsController from './controllers/workPeriods.controller';
 import UserRepository from './repositories/users.repository';
 import TeamRepository from './repositories/teams.repository';
 import type { DataBaseType } from './types/database';
+import WorkPeriodRepository from './repositories/workPeriods.repository';
 
 function app (db: DataBaseType): Express {
   const application: Express = express();
@@ -30,8 +31,9 @@ function app (db: DataBaseType): Express {
   const teamsMiddleware: TeamsMiddleware = new TeamsMiddleware(teamRepository);
   const teamsController: TeamsController = new TeamsController(teamsService);
 
-  const workPeriodsService: WorkPeriodsService = new WorkPeriodsService(db);
-  const workPeriodsMiddleware: WorkPeriodsMiddleware = new WorkPeriodsMiddleware(db);
+  const workPeriodRepository: WorkPeriodRepository = new WorkPeriodRepository(db);
+  const workPeriodsService: WorkPeriodsService = new WorkPeriodsService(workPeriodRepository);
+  const workPeriodsMiddleware: WorkPeriodsMiddleware = new WorkPeriodsMiddleware({ workPeriodRepository, teamRepository, userRepository });
   const workPeriodsController: WorkPeriodsController = new WorkPeriodsController(workPeriodsService);
 
   application.use(express.json()); // parse body to json

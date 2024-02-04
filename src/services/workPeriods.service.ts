@@ -1,41 +1,17 @@
-import type DataBase from '../db';
+import BaseService from './baseService';
+import type WorkPeriodRepository from '../repositories/workPeriods.repository';
 import type { CreateWorkPeriodData, UpdateWorkPeriodData, WorkPeriod } from '../types/workPeriod';
 
-class WorkPeriodsService {
-  private database: DataBase;
-
-  constructor (database: DataBase) {
-    this.database = database;
+class WorkPeriodsService extends BaseService<WorkPeriod, CreateWorkPeriodData, UpdateWorkPeriodData> {
+  constructor (repository: WorkPeriodRepository) {
+    super(repository);
   }
 
-  public async getWorkPeriods(): Promise<WorkPeriod[]> {
-    return await this.database.getWorkPeriods();
-  }
-
-  public async createWorkPeriod (workPeriodData: CreateWorkPeriodData): Promise<WorkPeriod> {
-    const lastWorkPeriod: WorkPeriod = await this.database.getWorkPeriod(-1);
-    const workPeriod: WorkPeriod = {
-      ...workPeriodData,
-      id: lastWorkPeriod.id + 1,
-    };
-    if (!workPeriod.from || !workPeriod.to || !workPeriod.weekDays || !workPeriod.teamId || !workPeriod.userId) {
+  public async create(data: CreateWorkPeriodData): Promise<WorkPeriod> {
+    if (!data.from || !data.to || !data.weekDays || !data.teamId && data.teamId !== 0 || !data.userId && data.userId != 0) {
       throw new Error('Missing required property');
     }
-    await this.database.addWorkPeriod(workPeriod);
-    return workPeriod;
-  }
-
-  public async deleteWorkPeriod (index: number): Promise<void> {
-    await this.database.deleteWorkPeriod(index);
-  }
-
-  public async updateWorkPeriod (index: number, workPeriod: WorkPeriod, newWorkPeriodData: UpdateWorkPeriodData): Promise<WorkPeriod> {
-    const updatedWorkPeriod: WorkPeriod = {
-      ...workPeriod,
-      ...newWorkPeriodData,
-    };
-    await this.database.updateWorkPeriod(index, updatedWorkPeriod);
-    return updatedWorkPeriod;
+    return super.create(data);
   }
 }
 

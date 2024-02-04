@@ -1,4 +1,4 @@
-import BaseRepository from './baseRepository';
+import BaseRepository from './base.repository';
 import type { Team } from '../types/team';
 import type { DataBaseType } from '../types/database';
 
