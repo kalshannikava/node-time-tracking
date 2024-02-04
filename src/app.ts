@@ -4,7 +4,7 @@ import UserService from './services/users.service';
 import usersRouter from './routes/users.router';
 import UsersMiddleware from './middleware/users.middleware';
 import UsersController from './controllers/users.controller';
-import UserRepository from './repositories/userRepository';
+import UserRepository from './repositories/users.repository';
 import type { DataBaseType } from './types/database';
 
 function app (db: DataBaseType): Express {

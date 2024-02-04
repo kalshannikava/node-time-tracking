@@ -1,4 +1,4 @@
-import type BaseRepository from '../repositories/baseRepository';
+import type BaseRepository from '../repositories/base.repository';
 
 class BaseService<T extends { id: number }, C, U> {
   private repository: BaseRepository<T>;

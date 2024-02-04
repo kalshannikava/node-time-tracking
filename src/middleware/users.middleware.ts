@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 
 import { validate } from 'email-validator';
 import type { RequestWithID, User } from '../types/user';
-import type UserRepository from '../repositories/userRepository';
+import type UserRepository from '../repositories/users.repository';
 
 class UsersMiddleware {
   private usersRepository: UserRepository;

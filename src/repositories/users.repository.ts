@@ -1,4 +1,4 @@
-import BaseRepository from './baseRepository';
+import BaseRepository from './base.repository';
 import type { User } from '../types/user';
 import type { DataBaseType } from '../types/database';
 
