@@ -2,9 +2,13 @@ import BaseRepository from './base.repository';
 import type { Team } from '../types/team';
 import type { DataBaseType } from '../types/database';
 
+type Config = {
+  db: DataBaseType,
+}
+
 class TeamsRepository extends BaseRepository<Team> {
-  constructor (db: DataBaseType) {
-    super('teams', db);
+  constructor ({ db }: Config) {
+    super({ collection: 'teams', db });
   }
 }
 

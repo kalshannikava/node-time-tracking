@@ -4,10 +4,14 @@ import type { User } from '../types/user';
 import type { RequestWithID } from '../types/shared';
 import type UsersRepository from '../repositories/users.repository';
 
+type Config = {
+  usersRepository: UsersRepository,
+}
+
 class UsersMiddleware {
   private usersRepository: UsersRepository;
 
-  constructor (usersRepository: UsersRepository) {
+  constructor ({ usersRepository }: Config) {
     this.usersRepository = usersRepository;
   }
 
