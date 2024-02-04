@@ -1,5 +1,5 @@
 import BaseService from './baseService';
-import type UserRepository from '../repositories/userRepository';
+import type UserRepository from '../repositories/users.repository';
 import type { CreateUserData, UpdateUserData, User } from '../types/user';
 
 class UserService extends BaseService<User, CreateUserData, UpdateUserData> {
