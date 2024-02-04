@@ -15,7 +15,7 @@ export interface CreateUserRequest extends Request {
   body: CreateUserData,
 }
 
-export type UpdateUserData = Partial<Omit<User, 'id'>>;
+export type UpdateUserData = Partial<CreateUserData>;
 export interface UpdateUserRequest extends RequestWithID {
   body: UpdateUserData,
 }
