@@ -1,12 +1,12 @@
 import { Request, Response } from 'express';
 
-import type WorkPeriodService from '../services/workPeriods.service';
+import type WorkPeriodsService from '../services/workPeriods.service';
 import type { CreateWorkPeriodRequest, DeleteWorkPeriodRequest, GetWorkPeriodRequest, UpdateWorkPeriodRequest, WorkPeriod } from '../types/workPeriod';
 
 class WorkPeriodsController {
-  private workPeriodsService: WorkPeriodService;
+  private workPeriodsService: WorkPeriodsService;
 
-  constructor (workPeriodsService: WorkPeriodService) {
+  constructor (workPeriodsService: WorkPeriodsService) {
     this.workPeriodsService = workPeriodsService;
   }
 

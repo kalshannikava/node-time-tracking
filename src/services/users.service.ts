@@ -6,7 +6,7 @@ type Config = {
   repository: UsersRepository,
 }
 
-class UserService extends BaseService<User, CreateUserData, UpdateUserData> {
+class UsersService extends BaseService<User, CreateUserData, UpdateUserData> {
   constructor ({ repository }: Config) {
     super({ repository });
   }
@@ -19,4 +19,4 @@ class UserService extends BaseService<User, CreateUserData, UpdateUserData> {
   }
 }
 
-export default UserService;
+export default UsersService;

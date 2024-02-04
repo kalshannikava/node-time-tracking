@@ -4,7 +4,7 @@ import express, { Express } from 'express';
 import usersRouter from './routes/users.router';
 import teamsRouter from './routes/teams.router';
 import workPeriodsRouter from './routes/workPeriods.router';
-import UserService from './services/users.service';
+import UsersService from './services/users.service';
 import TeamsService from './services/teams.service';
 import WorkPeriodsService from './services/workPeriods.service';
 import UsersMiddleware from './middleware/users.middleware';
@@ -22,9 +22,9 @@ function app (db: DataBaseType): Express {
   const application: Express = express();
 
   const usersRepository: UsersRepository = new UsersRepository(db);
-  const userService: UserService = new UserService(usersRepository);
+  const usersService: UsersService = new UsersService(usersRepository);
   const usersMiddleware: UsersMiddleware = new UsersMiddleware(usersRepository);
-  const usersController: UsersController = new UsersController(userService);
+  const usersController: UsersController = new UsersController(usersService);
 
   const teamsRepository: TeamsRepository = new TeamsRepository(db);
   const teamsService: TeamsService = new TeamsService(teamsRepository);
