@@ -10,6 +10,7 @@ import TeamsMiddleware from './middleware/teams.middleware';
 import TeamsService from './services/teams.service';
 import UserRepository from './repositories/userRepository';
 import type { DataBaseType } from './types/database';
+import TeamRepository from './repositories/teams.repository';
 
 function app (db: DataBaseType): Express {
   const application: Express = express();
@@ -19,8 +20,9 @@ function app (db: DataBaseType): Express {
   const usersMiddleware: UsersMiddleware = new UsersMiddleware(userRepository);
   const usersController: UsersController = new UsersController(userService);
 
-  const teamsService: TeamsService = new TeamsService(db);
-  const teamsMiddleware: TeamsMiddleware = new TeamsMiddleware(db);
+  const teamRepository: TeamRepository = new TeamRepository(db);
+  const teamsService: TeamsService = new TeamsService(teamRepository);
+  const teamsMiddleware: TeamsMiddleware = new TeamsMiddleware(teamRepository);
   const teamsController: TeamsController = new TeamsController(teamsService);
 
   application.use(express.json()); // parse body to json
