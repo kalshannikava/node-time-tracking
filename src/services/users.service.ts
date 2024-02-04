@@ -2,7 +2,7 @@ import BaseService from './baseService';
 import type UsersRepository from '../repositories/users.repository';
 import type { CreateUserData, UpdateUserData, User } from '../types/user';
 
-class UserService extends BaseService<User, CreateUserData, UpdateUserData> {
+class UsersService extends BaseService<User, CreateUserData, UpdateUserData> {
   constructor (repository: UsersRepository) {
     super(repository);
   }
@@ -15,4 +15,4 @@ class UserService extends BaseService<User, CreateUserData, UpdateUserData> {
   }
 }
 
-export default UserService;
+export default UsersService;

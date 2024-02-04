@@ -1,17 +1,17 @@
 import { Request, Response } from 'express';
 
-import type UserService from '../services/users.service';
+import type UsersService from '../services/users.service';
 import type { CreateUserRequest, DeleteUserRequest, GetUserRequest, UpdateUserRequest, User } from '../types/user';
 
 class UsersController {
-  private userService: UserService;
+  private usersService: UsersService;
 
-  constructor (userService: UserService) {
-    this.userService = userService;
+  constructor (usersService: UsersService) {
+    this.usersService = usersService;
   }
 
   public async getAll (_req: Request, res: Response) {
-    const data: User[] = await this.userService.getAll();
+    const data: User[] = await this.usersService.getAll();
     return res.status(200).json(data);
   }
   
@@ -21,7 +21,7 @@ class UsersController {
   
   public async create (req: CreateUserRequest, res: Response) {
     try {
-      const user: User = await this.userService.create(req.body);
+      const user: User = await this.usersService.create(req.body);
       return res.status(201).json(user);
     } catch (error) {
       return res.status(400).json({ error: error.message });
@@ -29,12 +29,12 @@ class UsersController {
   }
   
   public async delete (req: DeleteUserRequest, res: Response) {
-    await this.userService.delete(req.index);
+    await this.usersService.delete(req.index);
     return res.status(200).json(req.entity);
   }
   
   public async update (req: UpdateUserRequest, res: Response) {
-    const updatedUser: User = await this.userService.update(req.index, req.entity as User, req.body);
+    const updatedUser: User = await this.usersService.update(req.index, req.entity as User, req.body);
     res.status(200).json(updatedUser);
   }
 }
