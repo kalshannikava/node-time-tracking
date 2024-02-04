@@ -5,9 +5,9 @@ import usersRouter from './routes/users.router';
 import UsersMiddleware from './middleware/users.middleware';
 import UsersController from './controllers/users.controller';
 import UserRepository from './repositories/userRepository';
-import type { DataBaseI } from './types/database';
+import type { DataBaseType } from './types/database';
 
-function app (db: DataBaseI): Express {
+function app (db: DataBaseType): Express {
   const application: Express = express();
 
   const userRepository: UserRepository = new UserRepository(db);

@@ -1,4 +1,4 @@
-export interface DataBaseI {
+export interface DataBaseType {
   getAll<T> (collection: string): Promise<T[]>;
 
   get<T> (collection: string, index: number): Promise<T>;

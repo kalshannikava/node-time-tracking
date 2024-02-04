@@ -1,7 +1,7 @@
-import type { DataBaseI } from '../../types/database';
+import type { DataBaseType } from '../../types/database';
 import { dbMock } from './mockData';
 
-class MockDataBase implements DataBaseI {
+class MockDataBase implements DataBaseType {
   getAll<T>(collection: string): Promise<T[]> {
     return new Promise((resolve) => resolve(dbMock[collection]));
   }
