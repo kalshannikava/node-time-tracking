@@ -4,10 +4,14 @@ import { validate } from 'email-validator';
 import type { RequestWithID, User } from '../types/user';
 import type UserRepository from '../repositories/userRepository';
 
+type Config = {
+  usersRepository: UserRepository,
+}
+
 class UsersMiddleware {
   private usersRepository: UserRepository;
 
-  constructor (usersRepository: UserRepository) {
+  constructor ({ usersRepository } : Config) {
     this.usersRepository = usersRepository;
   }
 

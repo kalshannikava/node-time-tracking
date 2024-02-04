@@ -2,10 +2,14 @@ import { JsonDB, Config } from 'node-json-db';
 
 import type { DataBaseType } from '../types/database';
 
+type DBConfig = {
+  filename: string,
+}
+
 class DataBase implements DataBaseType {
   private db: JsonDB;
 
-  constructor (filename: string) {
+  constructor ({ filename }: DBConfig) {
     this.db = new JsonDB(new Config(filename, true, true, '/'));
   }
 
