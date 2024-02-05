@@ -1,10 +1,11 @@
 import request from 'supertest';
 import type { Express } from 'express';
 import app from '../app';
-import MockDataBase from './mocks/mockDataBase';
+import { setupTestContainers } from './setup/setup';
+import type { RoutesConfig } from '../types/app';
 
-const db: MockDataBase = new MockDataBase();
-const application: Express = app(db);
+const routesConfig: RoutesConfig = setupTestContainers();
+const application: Express = app(routesConfig);
 
 describe('GET /users', () => {
   it('should respond with 200 success', async () => {
