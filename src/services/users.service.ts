@@ -3,12 +3,12 @@ import type UsersRepository from '../repositories/users.repository';
 import type { CreateUserData, UpdateUserData, User } from '../types/user';
 
 type Config = {
-  repository: UsersRepository,
+  usersRepository: UsersRepository,
 }
 
 class UsersService extends BaseService<User, CreateUserData, UpdateUserData> {
-  constructor ({ repository }: Config) {
-    super({ repository });
+  constructor ({ usersRepository }: Config) {
+    super({ repository: usersRepository });
   }
 
   public async create(data: CreateUserData): Promise<User> {

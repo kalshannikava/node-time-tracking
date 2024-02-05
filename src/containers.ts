@@ -12,6 +12,7 @@ import WorkPeriodsService from './services/workPeriods.service';
 import WorkPeriodsMiddleware from './middleware/workPeriod.middleware';
 import WorkPeriodsController from './controllers/workPeriods.controller';
 import WorkPeriodsRepository from './repositories/workPeriods.repository';
+
 import DataBase from './db/index';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
