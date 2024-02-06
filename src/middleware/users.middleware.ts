@@ -2,12 +2,12 @@ import { Request, Response, NextFunction } from 'express';
 import { validate } from 'email-validator';
 import type { User } from '../types/user';
 import type { RequestWithID } from '../types/shared';
-import type UserRepository from '../repositories/users.repository';
+import type UsersRepository from '../repositories/users.repository';
 
 class UsersMiddleware {
-  private usersRepository: UserRepository;
+  private usersRepository: UsersRepository;
 
-  constructor (usersRepository: UserRepository) {
+  constructor (usersRepository: UsersRepository) {
     this.usersRepository = usersRepository;
   }
 
