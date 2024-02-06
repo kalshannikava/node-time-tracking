@@ -1,12 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn } from 'typeorm';
+import { Entity, Column, OneToOne, JoinColumn } from 'typeorm';
 import { User } from './User';
 import { Team } from './Team';
+import { BaseEntity } from './BaseEntity';
 
 @Entity('work_periods')
-export class WorkPeriod {
-  @PrimaryGeneratedColumn()
-  id: number;
-
+export class WorkPeriod extends BaseEntity {
   @Column()
   from: string;
 
@@ -14,7 +12,7 @@ export class WorkPeriod {
   to: string;
 
   @Column()
-  weekdays: string;
+  weekDays: string;
 
   @OneToOne(() => User)
   @JoinColumn()
