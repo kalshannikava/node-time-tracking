@@ -1,25 +1,25 @@
 import { Response, NextFunction } from 'express';
 
+import type DataBase from '../db';
 import type { Team } from '../types/team';
 import type { RequestWithID } from '../types/shared';
-import TeamRepository from '../repositories/teams.repository';
 
 class TeamsMiddleware {
-  private teamsRepository: TeamRepository;
+  private database: DataBase;
 
-  constructor (teamsRepository: TeamRepository) {
-    this.teamsRepository = teamsRepository;
+  constructor (database: DataBase) {
+    this.database = database;
   }
 
   public async checkIfTeamExists (req: RequestWithID, res: Response, next: NextFunction) {
     const id: number = Number(req.params.id);
-    const index: number = await this.teamsRepository.getIndex(id);
-    if (index === -1) {
-      return res.status(404).json({ error: 'User not found' });
+    try {
+      const [index, team]: [number, Team] = await this.database.getTeamById(id);
+      req.index = index;
+      req.entity = team;
+    } catch (error) {
+      return res.status(404).json({ error: error.message });
     }
-    const team: Team = await this.teamsRepository.get(index);
-    req.entity = team;
-    req.index = index;
     next();
   }
 }

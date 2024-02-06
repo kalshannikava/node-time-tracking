@@ -11,7 +11,7 @@ class TeamsController {
   }
 
   public async getTeams (_req: Request, res: Response) {
-    const data: Team[] = await this.teamsService.getAll();
+    const data: Team[] = await this.teamsService.getTeams();
     return res.status(200).json(data);
   }
 
@@ -21,7 +21,7 @@ class TeamsController {
 
   public async createTeam (req: CreateTeamRequest, res: Response) {
     try {
-      const team: Team = await this.teamsService.create(req.body);
+      const team: Team = await this.teamsService.createTeam(req.body);
       return res.status(201).json(team);
     } catch (error) {
       return res.status(400).json({ error: error.message });
@@ -29,12 +29,12 @@ class TeamsController {
   }
 
   public async updateTeam (req: UpdateTeamRequest, res: Response) {
-    const updatedTeam: Team = await this.teamsService.update(req.index, req.entity as Team, req.body);
+    const updatedTeam: Team = await this.teamsService.updateUser(req.index, req.entity as Team, req.body);
     res.status(200).json(updatedTeam);
   }
 
   public async deleteTeam (req: DeleteTeamRequest, res: Response) {
-    await this.teamsService.delete(req.index);
+    await this.teamsService.deleteTeam(req.index);
     return res.status(200).json(req.entity);
   }
 }

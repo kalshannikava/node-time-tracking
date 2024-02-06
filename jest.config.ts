@@ -8,7 +8,6 @@ const config: Config = {
     '^.+\\.ts?$': 'ts-jest',
   },
   transformIgnorePatterns: ['<rootDir>/node_modules/'],
-  modulePathIgnorePatterns: ['<rootDir>/src/tests/mocks']
 };
 
 export default config;

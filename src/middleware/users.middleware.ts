@@ -1,25 +1,26 @@
 import { Request, Response, NextFunction } from 'express';
 import { validate } from 'email-validator';
-import type { User } from '../types/user';
+
+import type DataBase from '../db';
 import type { RequestWithID } from '../types/shared';
-import type UserRepository from '../repositories/users.repository';
+import type { User } from '../types/user'
 
 class UsersMiddleware {
-  private usersRepository: UserRepository;
+  private database: DataBase;
 
-  constructor (usersRepository: UserRepository) {
-    this.usersRepository = usersRepository;
+  constructor (database: DataBase) {
+    this.database = database;
   }
 
   public async checkIfUserExists (req: RequestWithID, res: Response, next: NextFunction) {
   const id: number = Number(req.params.id);
-  const index: number = await this.usersRepository.getIndex(id);
-  if (index === -1) {
-    return res.status(404).json({ error: 'User not found' });
+  try {
+    const [index, user]: [number, User] = await this.database.getUserById(id);
+    req.entity = user;
+    req.index = index;
+  } catch (error) {
+    return res.status(404).json({ error: error.message });
   }
-  const user: User = await this.usersRepository.get(index);
-  req.entity = user;
-  req.index = index;
   next();
 }
 
