@@ -1,3 +1,4 @@
+import { Team } from '../../types/team';
 import { User } from '../../types/user';
 
 const usersMock: User[] = [
@@ -15,6 +16,20 @@ const usersMock: User[] = [
   }
 ];
 
+const teamsMock: Team[] = [
+  {
+    id: 0,
+    name: 'Team 1',
+    logo: 'logo1.png',
+  },
+  {
+    id: 1,
+    name: 'Team 2',
+    logo: 'logo2.png',
+  }
+];
+
 export const dbMock = {
   users: usersMock,
+  teams: teamsMock,
 }

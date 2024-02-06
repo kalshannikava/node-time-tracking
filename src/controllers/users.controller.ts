@@ -16,7 +16,7 @@ class UsersController {
   }
   
   public async get (req: GetUserRequest, res: Response) {
-    return res.status(200).json(req.user);
+    return res.status(200).json(req.entity);
   }
   
   public async create (req: CreateUserRequest, res: Response) {
@@ -30,11 +30,11 @@ class UsersController {
   
   public async delete (req: DeleteUserRequest, res: Response) {
     await this.userService.delete(req.index);
-    return res.status(200).json(req.user);
+    return res.status(200).json(req.entity);
   }
   
   public async update (req: UpdateUserRequest, res: Response) {
-    const updatedUser: User = await this.userService.update(req.index, req.user, req.body);
+    const updatedUser: User = await this.userService.update(req.index, req.entity as User, req.body);
     res.status(200).json(updatedUser);
   }
 }

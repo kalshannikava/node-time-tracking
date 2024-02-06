@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
-
 import { validate } from 'email-validator';
-import type { RequestWithID, User } from '../types/user';
+import type { User } from '../types/user';
+import type { RequestWithID } from '../types/shared';
 import type UserRepository from '../repositories/users.repository';
 
 class UsersMiddleware {
@@ -18,7 +18,7 @@ class UsersMiddleware {
     return res.status(404).json({ error: 'User not found' });
   }
   const user: User = await this.usersRepository.get(index);
-  req.user = user;
+  req.entity = user;
   req.index = index;
   next();
 }
