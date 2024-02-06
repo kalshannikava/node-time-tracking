@@ -33,34 +33,49 @@ const workPeriodsContainer = awilix.createContainer({
   strict: true,
 });
 
-function setupContainers(filename: string) {
+function setupContainers(filepath: string) {
+  const filename = awilix.asValue(filepath);
+  const db = awilix.asClass(DataBase);
+  const usersRepository = awilix.asClass(UsersRepository);
+  const usersService = awilix.asClass(UsersService);
+  const usersMiddleware = awilix.asClass(UsersMiddleware);
+  const usersController = awilix.asClass(UsersController);
+  const teamsRepository = awilix.asClass(TeamsRepository);
+  const teamsService = awilix.asClass(TeamsService);
+  const teamsMiddleware = awilix.asClass(TeamsMiddleware);
+  const teamsController = awilix.asClass(TeamsController);
+  const workPeriodsRepository = awilix.asClass(WorkPeriodsRepository)
+  const workPeriodsService = awilix.asClass(WorkPeriodsService);
+  const workPeriodsMiddleware = awilix.asClass(WorkPeriodsMiddleware);
+  const workPeriodsController =  awilix.asClass(WorkPeriodsController);
+
   usersContainer.register({
-    filename: awilix.asValue(filename),
-    db: awilix.asClass(DataBase),
-    usersRepository: awilix.asClass(UsersRepository),
-    usersService: awilix.asClass(UsersService),
-    middleware: awilix.asClass(UsersMiddleware),
-    controller: awilix.asClass(UsersController),
+    filename,
+    db,
+    usersRepository,
+    usersService,
+    usersMiddleware,
+    usersController,
   });
 
   teamsContainer.register({
-    filename: awilix.asValue(filename),
-    db: awilix.asClass(DataBase),
-    teamsRepository: awilix.asClass(TeamsRepository),
-    teamsService: awilix.asClass(TeamsService),
-    middleware: awilix.asClass(TeamsMiddleware),
-    controller: awilix.asClass(TeamsController),
+    filename,
+    db,
+    teamsRepository,
+    teamsService,
+    teamsMiddleware,
+    teamsController,
   });
 
   workPeriodsContainer.register({
-    filename: awilix.asValue(filename),
-    db: awilix.asClass(DataBase),
-    workPeriodsRepository: awilix.asClass(WorkPeriodsRepository),
-    usersRepository: awilix.asClass(UsersRepository),
-    teamsRepository: awilix.asClass(TeamsRepository),
-    workPeriodsService: awilix.asClass(WorkPeriodsService),
-    middleware: awilix.asClass(WorkPeriodsMiddleware),
-    controller: awilix.asClass(WorkPeriodsController),
+    filename,
+    db,
+    workPeriodsRepository,
+    usersRepository,
+    teamsRepository,
+    workPeriodsService,
+    workPeriodsMiddleware,
+    workPeriodsController,
   });
 }
 
