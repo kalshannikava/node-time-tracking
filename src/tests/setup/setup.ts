@@ -37,45 +37,59 @@ const workPeriodsContainerTest = awilix.createContainer({
 function getTestRoutesConfig(): RoutesConfig {
   return {
     workPeriods: {
-      middleware: workPeriodsContainerTest.resolve('middleware'),
-      controller: workPeriodsContainerTest.resolve('controller'),
+      middleware: workPeriodsContainerTest.resolve('workPeriodsMiddleware'),
+      controller: workPeriodsContainerTest.resolve('workPeriodsController'),
     },
     teams: {
-      middleware: teamsContainerTest.resolve('middleware'),
-      controller: teamsContainerTest.resolve('controller'),
+      middleware: teamsContainerTest.resolve('teamsMiddleware'),
+      controller: teamsContainerTest.resolve('teamsController'),
     },
     users: {
-      middleware: usersContainerTest.resolve('middleware'),
-      controller: usersContainerTest.resolve('controller'),
-    },
+      middleware: usersContainerTest.resolve('usersMiddleware'),
+      controller: usersContainerTest.resolve('usersController'),
+    }
   };
 }
 
 function setupTestContainers(): RoutesConfig {
+  const db = awilix.asClass(DataBase);
+  const usersRepository = awilix.asClass(UsersRepository);
+  const usersService = awilix.asClass(UsersService);
+  const usersMiddleware = awilix.asClass(UsersMiddleware);
+  const usersController = awilix.asClass(UsersController);
+  const teamsRepository = awilix.asClass(TeamsRepository);
+  const teamsService = awilix.asClass(TeamsService);
+  const teamsMiddleware = awilix.asClass(TeamsMiddleware);
+  const teamsController = awilix.asClass(TeamsController);
+  const workPeriodsRepository = awilix.asClass(WorkPeriodsRepository)
+  const workPeriodsService = awilix.asClass(WorkPeriodsService);
+  const workPeriodsMiddleware = awilix.asClass(WorkPeriodsMiddleware);
+  const workPeriodsController =  awilix.asClass(WorkPeriodsController);
+
   usersContainerTest.register({
-    db: awilix.asClass(DataBase),
-    usersRepository: awilix.asClass(UsersRepository),
-    usersService: awilix.asClass(UsersService),
-    middleware: awilix.asClass(UsersMiddleware),
-    controller: awilix.asClass(UsersController),
+    db,
+    usersRepository,
+    usersService,
+    usersMiddleware,
+    usersController,
   });
 
   teamsContainerTest.register({
-    db: awilix.asClass(DataBase),
-    teamsRepository: awilix.asClass(TeamsRepository),
-    teamsService: awilix.asClass(TeamsService),
-    middleware: awilix.asClass(TeamsMiddleware),
-    controller: awilix.asClass(TeamsController),
+    db,
+    teamsRepository,
+    teamsService,
+    teamsMiddleware,
+    teamsController,
   });
 
   workPeriodsContainerTest.register({
-    db: awilix.asClass(DataBase),
-    workPeriodsRepository: awilix.asClass(WorkPeriodsRepository),
-    usersRepository: awilix.asClass(UsersRepository),
-    teamsRepository: awilix.asClass(TeamsRepository),
-    workPeriodsService: awilix.asClass(WorkPeriodsService),
-    middleware: awilix.asClass(WorkPeriodsMiddleware),
-    controller: awilix.asClass(WorkPeriodsController),
+    db,
+    workPeriodsRepository,
+    usersRepository,
+    teamsRepository,
+    workPeriodsService,
+    workPeriodsMiddleware,
+    workPeriodsController,
   });
 
   return getTestRoutesConfig();

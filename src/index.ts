@@ -22,18 +22,18 @@ AppDataSource.initialize()
 
     const routesConfig: RoutesConfig = {
       workPeriods: {
-        middleware: workPeriodsContainer.resolve('middleware'),
-        controller: workPeriodsContainer.resolve('controller'),
+        middleware: workPeriodsContainer.resolve('workPeriodsMiddleware'),
+        controller: workPeriodsContainer.resolve('workPeriodsController'),
       },
       teams: {
-        middleware: teamsContainer.resolve('middleware'),
-        controller: teamsContainer.resolve('controller'),
+        middleware: teamsContainer.resolve('teamsMiddleware'),
+        controller: teamsContainer.resolve('teamsController'),
       },
       users: {
-        middleware: usersContainer.resolve('middleware'),
-        controller: usersContainer.resolve('controller'),
-      },
-    };
+        middleware: usersContainer.resolve('usersMiddleware'),
+        controller: usersContainer.resolve('usersController'),
+      }
+    }
 
     const PORT: number = Number(process.env.PORT) || 8000;
     const server: Server = http.createServer(app(routesConfig));
