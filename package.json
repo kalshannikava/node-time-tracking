@@ -36,6 +36,7 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
+    "awilix": "^10.0.1",
     "email-validator": "^2.0.4",
     "express": "^4.18.2",
     "node-json-db": "^2.3.0"
