@@ -1,25 +1,25 @@
 import http, { Server } from 'http';
 import { join } from 'path';
 
-import { usersContainer, teamsContainer, workPeriodsContainer, setupContainers } from './containers';
+import { container, setupContainer } from './containers';
 import app from './app';
 import { RoutesConfig } from './types/app';
 
 const dbPath: string = join(__dirname, 'db', 'db.json');
-setupContainers(dbPath);
+setupContainer(dbPath);
 
 const routesConfig: RoutesConfig = {
   workPeriods: {
-    middleware: workPeriodsContainer.resolve('workPeriodsMiddleware'),
-    controller: workPeriodsContainer.resolve('workPeriodsController'),
+    middleware: container.resolve('workPeriodsMiddleware'),
+    controller: container.resolve('workPeriodsController'),
   },
   teams: {
-    middleware: teamsContainer.resolve('teamsMiddleware'),
-    controller: teamsContainer.resolve('teamsController'),
+    middleware: container.resolve('teamsMiddleware'),
+    controller: container.resolve('teamsController'),
   },
   users: {
-    middleware: usersContainer.resolve('usersMiddleware'),
-    controller: usersContainer.resolve('usersController'),
+    middleware: container.resolve('usersMiddleware'),
+    controller: container.resolve('usersController'),
   }
 }
 

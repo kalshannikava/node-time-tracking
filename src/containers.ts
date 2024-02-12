@@ -18,22 +18,12 @@ import DataBase from './db/index';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const awilix = require('awilix');
 
-const usersContainer = awilix.createContainer({
+const container = awilix.createContainer({
   injectionMode: awilix.InjectionMode.PROXY,
   strict: true,
-});
+})
 
-const teamsContainer = awilix.createContainer({
-  injectionMode: awilix.InjectionMode.PROXY,
-  strict: true,
-});
-
-const workPeriodsContainer = awilix.createContainer({
-  injectionMode: awilix.InjectionMode.PROXY,
-  strict: true,
-});
-
-function setupContainers(filepath: string) {
+function setupContainer(filepath: string) {
   const filename = awilix.asValue(filepath);
   const db = awilix.asClass(DataBase);
   const usersRepository = awilix.asClass(UsersRepository);
@@ -49,30 +39,18 @@ function setupContainers(filepath: string) {
   const workPeriodsMiddleware = awilix.asClass(WorkPeriodsMiddleware);
   const workPeriodsController =  awilix.asClass(WorkPeriodsController);
 
-  usersContainer.register({
+  container.register({
     filename,
     db,
     usersRepository,
     usersService,
     usersMiddleware,
     usersController,
-  });
-
-  teamsContainer.register({
-    filename,
-    db,
     teamsRepository,
     teamsService,
     teamsMiddleware,
     teamsController,
-  });
-
-  workPeriodsContainer.register({
-    filename,
-    db,
     workPeriodsRepository,
-    usersRepository,
-    teamsRepository,
     workPeriodsService,
     workPeriodsMiddleware,
     workPeriodsController,
@@ -80,8 +58,6 @@ function setupContainers(filepath: string) {
 }
 
 export {
-  usersContainer,
-  teamsContainer,
-  workPeriodsContainer,
-  setupContainers,
+  container,
+  setupContainer,
 }
