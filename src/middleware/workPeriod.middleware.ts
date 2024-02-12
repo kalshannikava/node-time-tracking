@@ -9,7 +9,7 @@ import type TeamsRepository from '../repositories/teams.repository';
 import { User } from '../entity/User';
 import { Team } from '../entity/Team';
 
-type Config = {
+type WorkPeriodsMiddlewareContext = {
   workPeriodsRepository: WorkPeriodsRepository,
   usersRepository: UsersRepository,
   teamsRepository: TeamsRepository,
@@ -20,7 +20,7 @@ class WorkPeriodsMiddleware {
   private usersRepository: UsersRepository;
   private teamsRepository: TeamsRepository;
 
-  constructor ({ workPeriodsRepository, usersRepository, teamsRepository }: Config) {
+  constructor ({ workPeriodsRepository, usersRepository, teamsRepository }: WorkPeriodsMiddlewareContext) {
     this.workPeriodsRepository = workPeriodsRepository;
     this.usersRepository = usersRepository;
     this.teamsRepository = teamsRepository;

@@ -4,12 +4,12 @@ import BaseService from './baseService';
 import type UsersRepository from '../repositories/users.repository';
 import type { User } from '../entity/User';
 
-type Config = {
+type UsersServiceContext = {
   usersRepository: UsersRepository,
 }
 
 class UsersService extends BaseService<User> {
-  constructor ({ usersRepository }: Config) {
+  constructor ({ usersRepository }: UsersServiceContext) {
     super({ repository: usersRepository });
   }
 

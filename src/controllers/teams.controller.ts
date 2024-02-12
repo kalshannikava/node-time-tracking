@@ -3,14 +3,14 @@ import { Request, Response } from 'express';
 import type TeamsService from '../services/teams.service';
 import type { CreateTeamRequest, DeleteTeamRequest, GetTeamRequest, UpdateTeamRequest } from '../types/team';
 
-type Config = {
+type TeamsControllerContext = {
   teamsService: TeamsService,
 }
 
 class TeamsController {
   private teamsService: TeamsService;
 
-  constructor ({ teamsService }: Config) {
+  constructor ({ teamsService }: TeamsControllerContext) {
     this.teamsService = teamsService;
   }
 

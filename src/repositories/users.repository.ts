@@ -3,12 +3,12 @@ import type { DataSource } from 'typeorm';
 import BaseRepository from './base.repository';
 import { User } from '../entity/User';
 
-type UsersRepositoryConfig = {
+type UsersRepositoryContext = {
   dataSource: DataSource,
 }
 
 class UsersRepository extends BaseRepository<User> {
-  constructor ({ dataSource }: UsersRepositoryConfig) {
+  constructor ({ dataSource }: UsersRepositoryContext) {
     super({ repository: dataSource.getRepository(User) });
   }
 }

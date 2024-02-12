@@ -1,11 +1,6 @@
 import http, { Server } from 'http';
 
-import {
-  usersContainer,
-  teamsContainer,
-  workPeriodsContainer,
-  setupContainers,
-} from './containers';
+import { container, setupContainer } from './containers';
 import app from './app';
 import { RoutesConfig } from './types/app';
 import { AppDataSource } from './data-source';
@@ -16,20 +11,20 @@ AppDataSource.initialize()
     const users = await AppDataSource.manager.find(User);
     console.log('Loaded users: ', users);
 
-    setupContainers(AppDataSource);
+    setupContainer(AppDataSource);
 
     const routesConfig: RoutesConfig = {
       workPeriods: {
-        middleware: workPeriodsContainer.resolve('workPeriodsMiddleware'),
-        controller: workPeriodsContainer.resolve('workPeriodsController'),
+        middleware: container.resolve('workPeriodsMiddleware'),
+        controller: container.resolve('workPeriodsController'),
       },
       teams: {
-        middleware: teamsContainer.resolve('teamsMiddleware'),
-        controller: teamsContainer.resolve('teamsController'),
+        middleware: container.resolve('teamsMiddleware'),
+        controller: container.resolve('teamsController'),
       },
       users: {
-        middleware: usersContainer.resolve('usersMiddleware'),
-        controller: usersContainer.resolve('usersController'),
+        middleware: container.resolve('usersMiddleware'),
+        controller: container.resolve('usersController'),
       }
     }
 

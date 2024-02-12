@@ -4,14 +4,14 @@ import type { BaseEntity } from '../entity/BaseEntity';
 import type BaseRepository from '../repositories/base.repository';
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 
-type Config<Entity extends BaseEntity> = {
+type BaseServiceContext<Entity extends BaseEntity> = {
   repository: BaseRepository<Entity>
 }
 
 class BaseService<Entity extends BaseEntity> {
   private repository: BaseRepository<Entity>;
 
-  constructor ({ repository }: Config<Entity>) {
+  constructor ({ repository }: BaseServiceContext<Entity>) {
     this.repository = repository;
   }
 

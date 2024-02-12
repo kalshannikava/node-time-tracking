@@ -4,12 +4,12 @@ import BaseService from './baseService';
 import type WorkPeriodsRepository from '../repositories/workPeriods.repository';
 import { WorkPeriod } from '../entity/WorkPeriod';
 
-type Config = {
+type WorkPeriodsServiceContext = {
   workPeriodsRepository: WorkPeriodsRepository,
 }
 
 class WorkPeriodsService extends BaseService<WorkPeriod> {
-  constructor ({ workPeriodsRepository }: Config) {
+  constructor ({ workPeriodsRepository }: WorkPeriodsServiceContext) {
     super({ repository: workPeriodsRepository });
   }
 

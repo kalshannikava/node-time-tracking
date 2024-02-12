@@ -18,22 +18,12 @@ import WorkPeriodsRepository from './repositories/workPeriods.repository';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const awilix = require('awilix');
 
-const usersContainer = awilix.createContainer({
+const container = awilix.createContainer({
   injectionMode: awilix.InjectionMode.PROXY,
   strict: true,
-});
+})
 
-const teamsContainer = awilix.createContainer({
-  injectionMode: awilix.InjectionMode.PROXY,
-  strict: true,
-});
-
-const workPeriodsContainer = awilix.createContainer({
-  injectionMode: awilix.InjectionMode.PROXY,
-  strict: true,
-});
-
-function setupContainers(appDataSource: DataSource) {
+function setupContainer (appDataSource: DataSource) {
   const dataSource = awilix.asValue(appDataSource);
   const usersRepository = awilix.asClass(UsersRepository);
   const usersService = awilix.asClass(UsersService);
@@ -48,27 +38,17 @@ function setupContainers(appDataSource: DataSource) {
   const workPeriodsMiddleware = awilix.asClass(WorkPeriodsMiddleware);
   const workPeriodsController =  awilix.asClass(WorkPeriodsController);
 
-  usersContainer.register({
+  container.register({
     dataSource,
     usersRepository,
     usersService,
     usersMiddleware,
     usersController,
-  });
-
-  teamsContainer.register({
-    dataSource,
     teamsRepository,
     teamsService,
     teamsMiddleware,
     teamsController,
-  });
-
-  workPeriodsContainer.register({
-    dataSource,
     workPeriodsRepository,
-    usersRepository,
-    teamsRepository,
     workPeriodsService,
     workPeriodsMiddleware,
     workPeriodsController,
@@ -76,8 +56,6 @@ function setupContainers(appDataSource: DataSource) {
 }
 
 export {
-  usersContainer,
-  teamsContainer,
-  workPeriodsContainer,
-  setupContainers,
+  container,
+  setupContainer,
 }

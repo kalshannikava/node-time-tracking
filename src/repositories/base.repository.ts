@@ -1,8 +1,8 @@
-import { DeepPartial, FindOptionsWhere, Repository } from 'typeorm';
+import { DeepPartial, FindOptionsWhere, Repository, ObjectLiteral } from 'typeorm';
 import { BaseEntity } from '../entity/BaseEntity';
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 
-type BaseRepositoryConfig<Entity> = {
+type BaseRepositoryConfig<Entity extends ObjectLiteral> = {
   repository: Repository<Entity>;
 }
 

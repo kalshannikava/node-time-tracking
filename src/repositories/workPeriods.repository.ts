@@ -3,12 +3,12 @@ import type { DataSource } from 'typeorm';
 import BaseRepository from './base.repository';
 import { WorkPeriod } from '../entity/WorkPeriod';
 
-type WorkPeriodsConfig = {
+type WorkPeriodsRepositoryContext = {
   dataSource: DataSource,
 }
 
 class WorkPeriodsRepository extends BaseRepository<WorkPeriod> {
-  constructor ({ dataSource }: WorkPeriodsConfig) {
+  constructor ({ dataSource }: WorkPeriodsRepositoryContext) {
     super({ repository: dataSource.getRepository(WorkPeriod) });
   }
 }
