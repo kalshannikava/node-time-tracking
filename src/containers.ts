@@ -1,3 +1,5 @@
+import { DataSource } from 'typeorm';
+
 import UsersService from './services/users.service';
 import UsersMiddleware from './middleware/users.middleware';
 import UsersController from './controllers/users.controller';
@@ -12,8 +14,6 @@ import WorkPeriodsService from './services/workPeriods.service';
 import WorkPeriodsMiddleware from './middleware/workPeriod.middleware';
 import WorkPeriodsController from './controllers/workPeriods.controller';
 import WorkPeriodsRepository from './repositories/workPeriods.repository';
-
-import DataBase from './db/index';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const awilix = require('awilix');
@@ -33,9 +33,8 @@ const workPeriodsContainer = awilix.createContainer({
   strict: true,
 });
 
-function setupContainers(filepath: string) {
-  const filename = awilix.asValue(filepath);
-  const db = awilix.asClass(DataBase);
+function setupContainers(appDataSource: DataSource) {
+  const dataSource = awilix.asValue(appDataSource);
   const usersRepository = awilix.asClass(UsersRepository);
   const usersService = awilix.asClass(UsersService);
   const usersMiddleware = awilix.asClass(UsersMiddleware);
@@ -50,8 +49,7 @@ function setupContainers(filepath: string) {
   const workPeriodsController =  awilix.asClass(WorkPeriodsController);
 
   usersContainer.register({
-    filename,
-    db,
+    dataSource,
     usersRepository,
     usersService,
     usersMiddleware,
@@ -59,8 +57,7 @@ function setupContainers(filepath: string) {
   });
 
   teamsContainer.register({
-    filename,
-    db,
+    dataSource,
     teamsRepository,
     teamsService,
     teamsMiddleware,
@@ -68,8 +65,7 @@ function setupContainers(filepath: string) {
   });
 
   workPeriodsContainer.register({
-    filename,
-    db,
+    dataSource,
     workPeriodsRepository,
     usersRepository,
     teamsRepository,

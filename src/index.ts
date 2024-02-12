@@ -1,5 +1,4 @@
 import http, { Server } from 'http';
-import { join } from 'path';
 
 import {
   usersContainer,
@@ -17,8 +16,7 @@ AppDataSource.initialize()
     const users = await AppDataSource.manager.find(User);
     console.log('Loaded users: ', users);
 
-    const dbPath: string = join(__dirname, 'db', 'db.json');
-    setupContainers(dbPath);
+    setupContainers(AppDataSource);
 
     const routesConfig: RoutesConfig = {
       workPeriods: {
