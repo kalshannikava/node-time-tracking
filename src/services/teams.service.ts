@@ -2,12 +2,12 @@ import BaseService from './baseService';
 import type TeamsRepository from '../repositories/teams.repository';
 import type { CreateTeamData, UpdateTeamData, Team } from '../types/team';
 
-type Config = {
+type TeamsServiceContext = {
   teamsRepository: TeamsRepository,
 }
 
 class TeamsService extends BaseService<Team, CreateTeamData, UpdateTeamData> {
-  constructor ({ teamsRepository }: Config) {
+  constructor ({ teamsRepository }: TeamsServiceContext) {
     super({ repository: teamsRepository });
   }
 

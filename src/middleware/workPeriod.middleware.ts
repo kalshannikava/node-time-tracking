@@ -6,7 +6,7 @@ import type WorkPeriodsRepository from '../repositories/workPeriods.repository';
 import type UsersRepository from '../repositories/users.repository';
 import type TeamsRepository from '../repositories/teams.repository';
 
-type Config = {
+type WorkPeriodsMiddlewareContext = {
   workPeriodsRepository: WorkPeriodsRepository,
   usersRepository: UsersRepository,
   teamsRepository: TeamsRepository,
@@ -17,7 +17,7 @@ class WorkPeriodsMiddleware {
   private usersRepository: UsersRepository;
   private teamsRepository: TeamsRepository;
 
-  constructor ({ workPeriodsRepository, usersRepository, teamsRepository }: Config) {
+  constructor ({ workPeriodsRepository, usersRepository, teamsRepository }: WorkPeriodsMiddlewareContext) {
     this.workPeriodsRepository = workPeriodsRepository;
     this.usersRepository = usersRepository;
     this.teamsRepository = teamsRepository;

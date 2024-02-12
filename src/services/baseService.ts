@@ -1,13 +1,13 @@
 import type BaseRepository from '../repositories/base.repository';
 
-type Config<T> = {
+type BaseServiceContext<T> = {
   repository: BaseRepository<T>
 }
 
 class BaseService<T extends { id: number }, C, U> {
   private repository: BaseRepository<T>;
 
-  constructor ({ repository }: Config<T>) {
+  constructor ({ repository }: BaseServiceContext<T>) {
     this.repository = repository;
   }
 

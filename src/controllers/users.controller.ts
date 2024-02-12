@@ -3,14 +3,14 @@ import { Request, Response } from 'express';
 import type UsersService from '../services/users.service';
 import type { CreateUserRequest, DeleteUserRequest, GetUserRequest, UpdateUserRequest, User } from '../types/user';
 
-type Config = {
+type UsersControllerContext = {
   usersService: UsersService,
 }
 
 class UsersController {
   private usersService: UsersService;
 
-  constructor ({ usersService } : Config) {
+  constructor ({ usersService } : UsersControllerContext) {
     this.usersService = usersService;
   }
 

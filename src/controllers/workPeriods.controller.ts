@@ -3,14 +3,14 @@ import { Request, Response } from 'express';
 import type WorkPeriodsService from '../services/workPeriods.service';
 import type { CreateWorkPeriodRequest, DeleteWorkPeriodRequest, GetWorkPeriodRequest, UpdateWorkPeriodRequest, WorkPeriod } from '../types/workPeriod';
 
-type Config = {
+type WorkPeriodsControllerContext = {
   workPeriodsService: WorkPeriodsService,
 }
 
 class WorkPeriodsController {
   private workPeriodsService: WorkPeriodsService;
 
-  constructor ({ workPeriodsService }: Config) {
+  constructor ({ workPeriodsService }: WorkPeriodsControllerContext) {
     this.workPeriodsService = workPeriodsService;
   }
 

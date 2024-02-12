@@ -1,6 +1,6 @@
 import { DataBaseType } from '../types/database';
 
-type Config = {
+type BaseRepositoryContext = {
   collection: string,
   db: DataBaseType,
 }
@@ -9,7 +9,7 @@ class BaseRepository<T> {
   private collection: string;
   private db: DataBaseType;
 
-  constructor ({ collection, db }: Config) {
+  constructor ({ collection, db }: BaseRepositoryContext) {
     this.collection = collection;
     this.db = db;
   }
