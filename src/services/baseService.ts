@@ -1,42 +1,34 @@
-import type BaseRepository from '../repositories/base.repository';
+import { DeepPartial } from 'typeorm';
 
-type Config<T> = {
-  repository: BaseRepository<T>
+import type { BaseEntity } from '../entity/BaseEntity';
+import type BaseRepository from '../repositories/base.repository';
+import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
+
+type Config<Entity extends BaseEntity> = {
+  repository: BaseRepository<Entity>
 }
 
-class BaseService<T extends { id: number }, C, U> {
-  private repository: BaseRepository<T>;
+class BaseService<Entity extends BaseEntity> {
+  private repository: BaseRepository<Entity>;
 
-  constructor ({ repository }: Config<T>) {
+  constructor ({ repository }: Config<Entity>) {
     this.repository = repository;
   }
 
-  public async getAll (): Promise<T[]> {
+  public async getAll (): Promise<Entity[]> {
     return this.repository.getAll();
   }
 
-  public async create (data: C): Promise<T> {
-    const lastEntity: T = await this.repository.get(-1);
-    const newEntity: T = {
-      // TODO - update type conversion
-      ...data as unknown as T,
-      id: lastEntity.id + 1,
-    };
-    await this.repository.create(newEntity);
-    return newEntity;
+  public async create (data: DeepPartial<Entity>): Promise<Entity> {
+    return this.repository.create(data);
   }
 
   public async delete (index: number): Promise<void> {
     return this.repository.delete(index);
   }
 
-  public async update (index: number, entity: T, newEntityData: U): Promise<T> {
-    const updatedEntity: T = {
-      ...entity,
-      ...newEntityData,
-    };
-    await this.repository.update(index, updatedEntity);
-    return updatedEntity;
+  public async update (index: number, newEntityData: QueryDeepPartialEntity<Entity>): Promise<Entity> {
+    return this.repository.update(index, newEntityData);
   }
 }
 
