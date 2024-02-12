@@ -1,14 +1,15 @@
-import BaseRepository from './base.repository';
-import type { Team } from '../types/team';
-import type { DataBaseType } from '../types/database';
+import type { DataSource } from 'typeorm';
 
-type Config = {
-  db: DataBaseType,
+import BaseRepository from './base.repository';
+import { Team } from '../entity/Team';
+
+type TeamsRepositoryConfig = {
+  dataSource: DataSource,
 }
 
 class TeamsRepository extends BaseRepository<Team> {
-  constructor ({ db }: Config) {
-    super({ collection: 'teams', db });
+  constructor ({ dataSource }: TeamsRepositoryConfig) {
+    super({ repository: dataSource.getRepository(Team) });
   }
 }
 

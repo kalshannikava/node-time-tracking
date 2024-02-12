@@ -1,14 +1,15 @@
-import BaseRepository from './base.repository';
-import type { WorkPeriod } from '../types/workPeriod';
-import type { DataBaseType } from '../types/database';
+import type { DataSource } from 'typeorm';
 
-type Config = {
-  db: DataBaseType,
+import BaseRepository from './base.repository';
+import { WorkPeriod } from '../entity/WorkPeriod';
+
+type WorkPeriodsConfig = {
+  dataSource: DataSource,
 }
 
 class WorkPeriodsRepository extends BaseRepository<WorkPeriod> {
-  constructor ({ db }: Config) {
-    super({ collection: 'workPeriods', db });
+  constructor ({ dataSource }: WorkPeriodsConfig) {
+    super({ repository: dataSource.getRepository(WorkPeriod) });
   }
 }
 
