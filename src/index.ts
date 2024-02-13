@@ -2,15 +2,11 @@ import http, { Server } from 'http';
 
 import { container, setupContainer } from './containers';
 import app from './app';
-import { RoutesConfig } from './types/app';
+import type { RoutesConfig } from './types/app';
 import { AppDataSource } from './data-source';
-import { User } from './entity/User';
 
 AppDataSource.initialize()
   .then(async () => {
-    const users = await AppDataSource.manager.find(User);
-    console.log('Loaded users: ', users);
-
     setupContainer(AppDataSource);
 
     const routesConfig: RoutesConfig = {
