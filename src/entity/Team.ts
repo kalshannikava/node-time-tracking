@@ -3,9 +3,9 @@ import { BaseEntity } from './BaseEntity';
 
 @Entity('teams')
 export class Team extends BaseEntity {
-  @Column()
+  @Column('text')
   name: string;
 
-  @Column()
+  @Column('text')
   logo: string;
 }

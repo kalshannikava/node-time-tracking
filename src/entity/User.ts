@@ -3,12 +3,12 @@ import { BaseEntity } from './BaseEntity';
 
 @Entity('users')
 export class User extends BaseEntity {
-  @Column()
+  @Column('text')
   name: string;
 
-  @Column()
+  @Column('text')
   email: string;
 
-  @Column()
+  @Column('text')
   timezone: string;
 }

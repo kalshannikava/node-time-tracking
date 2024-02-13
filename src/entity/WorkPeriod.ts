@@ -5,20 +5,20 @@ import { BaseEntity } from './BaseEntity';
 
 @Entity('work_periods')
 export class WorkPeriod extends BaseEntity {
-  @Column()
+  @Column('text')
   from: string;
 
-  @Column()
+  @Column('text')
   to: string;
 
-  @Column()
+  @Column('text')
   weekDays: string;
 
-  @OneToOne(() => User)
-  @JoinColumn()
+  @OneToOne(() => User, user => user.id, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'userId' })
   userId: number;
 
-  @OneToOne(() => Team)
-  @JoinColumn()
+  @OneToOne(() => Team, team => team.id, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'teamId' })
   teamId: number;
 }
