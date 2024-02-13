@@ -4,10 +4,14 @@ import type { Team } from '../types/team';
 import type { RequestWithID } from '../types/shared';
 import TeamsRepository from '../repositories/teams.repository';
 
+type TeamsMiddlewareContext = {
+  teamsRepository: TeamsRepository,
+}
+
 class TeamsMiddleware {
   private teamsRepository: TeamsRepository;
 
-  constructor (teamsRepository: TeamsRepository) {
+  constructor ({ teamsRepository }: TeamsMiddlewareContext) {
     this.teamsRepository = teamsRepository;
   }
 

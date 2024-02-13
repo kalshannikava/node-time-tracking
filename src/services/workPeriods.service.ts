@@ -2,9 +2,13 @@ import BaseService from './baseService';
 import type WorkPeriodsRepository from '../repositories/workPeriods.repository';
 import type { CreateWorkPeriodData, UpdateWorkPeriodData, WorkPeriod } from '../types/workPeriod';
 
+type WorkPeriodsServiceContext = {
+  workPeriodsRepository: WorkPeriodsRepository,
+}
+
 class WorkPeriodsService extends BaseService<WorkPeriod, CreateWorkPeriodData, UpdateWorkPeriodData> {
-  constructor (repository: WorkPeriodsRepository) {
-    super(repository);
+  constructor ({ workPeriodsRepository }: WorkPeriodsServiceContext) {
+    super({ repository: workPeriodsRepository });
   }
 
   public async create(data: CreateWorkPeriodData): Promise<WorkPeriod> {

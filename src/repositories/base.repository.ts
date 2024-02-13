@@ -1,10 +1,15 @@
 import { DataBaseType } from '../types/database';
 
+type BaseRepositoryContext = {
+  collection: string,
+  db: DataBaseType,
+}
+
 class BaseRepository<T> {
   private collection: string;
   private db: DataBaseType;
 
-  constructor (collection: string, db: DataBaseType) {
+  constructor ({ collection, db }: BaseRepositoryContext) {
     this.collection = collection;
     this.db = db;
   }

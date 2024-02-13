@@ -2,9 +2,13 @@ import BaseService from './baseService';
 import type TeamsRepository from '../repositories/teams.repository';
 import type { CreateTeamData, UpdateTeamData, Team } from '../types/team';
 
+type TeamsServiceContext = {
+  teamsRepository: TeamsRepository,
+}
+
 class TeamsService extends BaseService<Team, CreateTeamData, UpdateTeamData> {
-  constructor (repository: TeamsRepository) {
-    super(repository);
+  constructor ({ teamsRepository }: TeamsServiceContext) {
+    super({ repository: teamsRepository });
   }
 
   public async create(data: CreateTeamData): Promise<Team> {
