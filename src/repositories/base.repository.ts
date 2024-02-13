@@ -7,7 +7,7 @@ type BaseRepositoryConfig<Entity extends ObjectLiteral> = {
 }
 
 abstract class BaseRepository<Entity extends BaseEntity> {
-  private repository: Repository<Entity>;
+  protected repository: Repository<Entity>;
 
   constructor ({ repository }: BaseRepositoryConfig<Entity>) {
     this.repository = repository;
