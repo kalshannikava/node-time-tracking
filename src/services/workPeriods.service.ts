@@ -14,7 +14,7 @@ class WorkPeriodsService extends BaseService<WorkPeriod> {
   }
 
   public async create(data: DeepPartial<WorkPeriod>): Promise<WorkPeriod> {
-    if (!data.from || !data.to || !data.weekDays || !data.teamId && data.teamId !== 0 || !data.userId && data.userId != 0) {
+    if (!data.from || !data.to || !data.weekDays || !data.teamId || !data.userId) {
       throw new Error('Missing required property');
     }
     return super.create(data);
