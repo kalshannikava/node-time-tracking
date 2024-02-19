@@ -51,7 +51,7 @@ class WorkPeriodsMiddleware {
     }
 
     const team = await this.teamsRepository.get(teamId);
-    if (team) {
+    if (!team) {
       return res.status(404).json({ error: 'Team not found' });
     } 
     next();
