@@ -1,6 +1,6 @@
 import { DeepPartial } from 'typeorm';
 
-import type { BaseEntity } from '../entity/BaseEntity';
+import type { BaseEntity } from '../entities/BaseEntity.entity';
 import type BaseRepository from '../repositories/base.repository';
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 

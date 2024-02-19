@@ -1,6 +1,6 @@
 import { Response, NextFunction } from 'express';
 
-import type { Team } from '../entity/Team';
+import type { Team } from '../entities/Team.entity';
 import type { RequestWithID } from '../types/shared';
 import TeamsRepository from '../repositories/teams.repository';
 

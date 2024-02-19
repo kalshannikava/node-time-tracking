@@ -1,7 +1,7 @@
 import type { DataSource } from 'typeorm';
 
 import BaseRepository from './base.repository';
-import { Team } from '../entity/Team';
+import { Team } from '../entities/Team.entity';
 
 type TeamsRepositoryContext = {
   dataSource: DataSource,

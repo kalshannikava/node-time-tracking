@@ -1,7 +1,7 @@
 import { Request } from 'express';
-import type { User } from '../entity/User';
-import type { Team } from '../entity/Team';
-import type { WorkPeriod } from '../entity/WorkPeriod';
+import type { User } from '../entities/User.entity';
+import type { Team } from '../entities/Team.entity';
+import type { WorkPeriod } from '../entities/WorkPeriod.entity';
 
 export interface RequestWithID extends Request<{ id: string }> {
   entity: User | Team | WorkPeriod;

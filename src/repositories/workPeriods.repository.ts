@@ -1,7 +1,7 @@
 import type { DataSource } from 'typeorm';
 
 import BaseRepository from './base.repository';
-import { WorkPeriod } from '../entity/WorkPeriod';
+import { WorkPeriod } from '../entities/WorkPeriod.entity';
 
 type WorkPeriodsRepositoryContext = {
   dataSource: DataSource,

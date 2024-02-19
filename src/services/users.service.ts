@@ -2,7 +2,7 @@ import { DeepPartial } from 'typeorm';
 
 import BaseService from './baseService';
 import type UsersRepository from '../repositories/users.repository';
-import type { User } from '../entity/User';
+import type { User } from '../entities/User.entity';
 
 type UsersServiceContext = {
   usersRepository: UsersRepository,

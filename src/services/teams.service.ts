@@ -2,7 +2,7 @@ import { DeepPartial } from 'typeorm';
 
 import BaseService from './baseService';
 import type TeamsRepository from '../repositories/teams.repository';
-import type { Team } from '../entity/Team';
+import type { Team } from '../entities/Team.entity';
 
 type TeamsServiceContext = {
   teamsRepository: TeamsRepository,

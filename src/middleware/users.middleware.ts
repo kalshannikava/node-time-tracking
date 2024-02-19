@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { validate } from 'email-validator';
-import type { User } from '../entity/User';
+import type { User } from '../entities/User.entity';
 import type { RequestWithID } from '../types/shared';
 import type UsersRepository from '../repositories/users.repository';
 

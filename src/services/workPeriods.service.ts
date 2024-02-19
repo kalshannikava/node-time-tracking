@@ -2,7 +2,7 @@ import { DeepPartial } from 'typeorm';
 
 import BaseService from './baseService';
 import type WorkPeriodsRepository from '../repositories/workPeriods.repository';
-import { WorkPeriod } from '../entity/WorkPeriod';
+import { WorkPeriod } from '../entities/WorkPeriod.entity';
 
 type WorkPeriodsServiceContext = {
   workPeriodsRepository: WorkPeriodsRepository,

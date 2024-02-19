@@ -1,7 +1,7 @@
 import type { DataSource } from 'typeorm';
 
 import BaseRepository from './base.repository';
-import { User } from '../entity/User';
+import { User } from '../entities/User.entity';
 
 type UsersRepositoryContext = {
   dataSource: DataSource,
