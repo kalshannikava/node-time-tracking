@@ -9,6 +9,6 @@ export class User extends BaseEntity {
   @Column('text', { unique: true })
   email: string;
 
-  @Column('text')
-  timezone: string;
+  @Column('timestamptz')
+  timezone: Date;
 }
