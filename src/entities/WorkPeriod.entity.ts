@@ -5,11 +5,11 @@ import { BaseEntity } from './BaseEntity.entity';
 
 @Entity('work_periods')
 export class WorkPeriod extends BaseEntity {
-  @Column('text')
-  from: string;
+  @Column('timestamptz')
+  from: Date;
 
-  @Column('text')
-  to: string;
+  @Column('timestamptz')
+  to: Date;
 
   @Column('text')
   weekDays: string;
