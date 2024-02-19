@@ -8,7 +8,9 @@ function workPeriodsRouter (workPeriodsController: WorkPeriodsController, workPe
 
   // Validation
   router.use('/:id', workPeriodsMiddleware.checkIfWorkPeriodExists.bind(workPeriodsMiddleware));
-  router.use('/', workPeriodsMiddleware.checkIfTeamOrUserExist.bind(workPeriodsMiddleware));
+  router.post('/', workPeriodsMiddleware.checkIfTeamOrUserExist.bind(workPeriodsMiddleware));
+  router.put('/:id', workPeriodsMiddleware.checkIfTeamOrUserExist.bind(workPeriodsMiddleware));
+  router.delete('/:id', workPeriodsMiddleware.checkIfTeamOrUserExist.bind(workPeriodsMiddleware));
 
   // Routes
   router.get('/', workPeriodsController.getWorkPeriods.bind(workPeriodsController));
