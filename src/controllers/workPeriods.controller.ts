@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 
 import type WorkPeriodsService from '../services/workPeriods.service';
-import type { CreateWorkPeriodRequest, DeleteWorkPeriodRequest, GetWorkPeriodRequest, UpdateWorkPeriodRequest, WorkPeriod } from '../types/workPeriod';
+import type { CreateWorkPeriodRequest, DeleteWorkPeriodRequest, GetWorkPeriodRequest, UpdateWorkPeriodRequest } from '../types/workPeriod';
 
 type WorkPeriodsControllerContext = {
   workPeriodsService: WorkPeriodsService,
@@ -19,13 +19,13 @@ class WorkPeriodsController {
   }
 
   public async getWorkPeriods (_req: Request, res: Response) {
-    const data: WorkPeriod[] = await this.workPeriodsService.getAll();
+    const data = await this.workPeriodsService.getAll();
     return res.status(200).json(data);
   }
 
   public async createWorkPeriod (req: CreateWorkPeriodRequest, res: Response) {
     try {
-      const workPeriod: WorkPeriod = await this.workPeriodsService.create(req.body);
+      const workPeriod = await this.workPeriodsService.create(req.body);
       return res.status(201).json(workPeriod);
     } catch (error) {
       return res.status(400).json({ error: error. message });
@@ -33,15 +33,14 @@ class WorkPeriodsController {
   }
 
   public async deleteWorkPeriod (req: DeleteWorkPeriodRequest, res: Response) {
-    await this.workPeriodsService.delete(req.index);
+    await this.workPeriodsService.delete(Number(req.params.id));
     return res.status(200).json(req.entity);
   }
 
   public async updateWorkPeriod (req: UpdateWorkPeriodRequest, res: Response) {
-    const updatedWorkPeriod: WorkPeriod = await this.workPeriodsService.update(req.index, req.entity as WorkPeriod, req.body);
+    const updatedWorkPeriod = await this.workPeriodsService.update(Number(req.params.id), req.body);
     return res.status(200).json(updatedWorkPeriod);
   }
 }
-
 
 export default WorkPeriodsController;

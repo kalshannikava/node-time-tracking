@@ -1,14 +1,15 @@
+import type { DataSource } from 'typeorm';
+
 import BaseRepository from './base.repository';
-import type { User } from '../types/user';
-import type { DataBaseType } from '../types/database';
+import { User } from '../entities/User.entity';
 
 type UsersRepositoryContext = {
-  db: DataBaseType,
+  dataSource: DataSource,
 }
 
 class UsersRepository extends BaseRepository<User> {
-  constructor ({ db }: UsersRepositoryContext) {
-    super({ collection: 'users', db });
+  constructor ({ dataSource }: UsersRepositoryContext) {
+    super({ repository: dataSource.getRepository(User) });
   }
 }
 

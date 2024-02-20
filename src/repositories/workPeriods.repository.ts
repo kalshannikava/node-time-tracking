@@ -1,14 +1,26 @@
+import type { DataSource } from 'typeorm';
+
 import BaseRepository from './base.repository';
-import type { WorkPeriod } from '../types/workPeriod';
-import type { DataBaseType } from '../types/database';
+import { WorkPeriod } from '../entities/WorkPeriod.entity';
 
 type WorkPeriodsRepositoryContext = {
-  db: DataBaseType,
+  dataSource: DataSource,
 }
 
 class WorkPeriodsRepository extends BaseRepository<WorkPeriod> {
-  constructor ({ db }: WorkPeriodsRepositoryContext) {
-    super({ collection: 'workPeriods', db });
+  constructor ({ dataSource }: WorkPeriodsRepositoryContext) {
+    super({ repository: dataSource.getRepository(WorkPeriod) });
+  }
+
+  public getAll(): Promise<WorkPeriod[]> {
+    return this.repository.find({ loadRelationIds: true });
+  }
+
+  public get(id: number): Promise<WorkPeriod> {
+    return this.repository.findOne({
+      where: { id },
+      loadRelationIds: true,
+    });
   }
 }
 

@@ -1,17 +1,19 @@
+import { DeepPartial } from 'typeorm';
+
 import BaseService from './baseService';
 import type UsersRepository from '../repositories/users.repository';
-import type { CreateUserData, UpdateUserData, User } from '../types/user';
+import type { User } from '../entities/User.entity';
 
 type UsersServiceContext = {
   usersRepository: UsersRepository,
 }
 
-class UsersService extends BaseService<User, CreateUserData, UpdateUserData> {
+class UsersService extends BaseService<User> {
   constructor ({ usersRepository }: UsersServiceContext) {
     super({ repository: usersRepository });
   }
 
-  public async create(data: CreateUserData): Promise<User> {
+  public async create(data: DeepPartial<User>): Promise<User> {
     if (!data.email || !data.name || !data.timezone) {
       throw new Error('Missing required property');
     }
