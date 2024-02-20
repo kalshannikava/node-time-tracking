@@ -2,7 +2,6 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-console.log('__dirname', __dirname)
 const config = {
   type: 'postgres',
   host: process.env.DB_HOST || '',
