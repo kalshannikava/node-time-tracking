@@ -1,6 +1,6 @@
 import { DeepPartial } from 'typeorm';
 
-import BaseService from './baseService';
+import BaseService from './base.service';
 import type UsersRepository from '../repositories/users.repository';
 import type { User } from '../entities/User.entity';
 

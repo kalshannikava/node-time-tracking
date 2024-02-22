@@ -1,6 +1,6 @@
 import { DeepPartial } from 'typeorm';
 
-import BaseService from './baseService';
+import BaseService from './base.service';
 import type WorkPeriodsRepository from '../repositories/workPeriods.repository';
 import { WorkPeriod } from '../entities/WorkPeriod.entity';
 
