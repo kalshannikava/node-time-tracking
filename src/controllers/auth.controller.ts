@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from 'express';
+import { Request, Response } from 'express';
 
 import type UsersService from '../services/users.service';
 import { generatePassword } from '../utils/password';
@@ -28,10 +28,10 @@ class AuthController {
     }
   }
 
-  public logoutWithCredentials (req: Request, res: Response, next: NextFunction) {
+  public logoutWithCredentials (req: Request, res: Response) {
     req.logout(function(err) {
       if (err) {
-        return next(err);
+        return res.status(400).json({ error: 'Error occurred.' });
       } else {
         res.status(200).end();
       }

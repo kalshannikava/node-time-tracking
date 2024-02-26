@@ -25,8 +25,8 @@ function usersRouter ({
   router.use('/', users.middleware.validateEmail.bind(users.middleware));
 
   // Routes
-  router.get('/', users.controller.getAll.bind(users.controller));
-  router.get('/:id', users.controller.get.bind(users.controller));
+  router.get('/', auth.middleware.isAuth, users.controller.getAll.bind(users.controller));
+  router.get('/:id', auth.middleware.isAuth, users.controller.get.bind(users.controller));
   router.post('/', auth.middleware.isAuth, users.controller.create.bind(users.controller));
   router.delete('/:id', auth.middleware.isAuth, users.controller.delete.bind(users.controller));
   router.put('/:id', auth.middleware.isAuth, users.controller.update.bind(users.controller));
