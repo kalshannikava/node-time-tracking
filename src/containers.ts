@@ -14,6 +14,8 @@ import WorkPeriodsService from './services/workPeriods.service';
 import WorkPeriodsMiddleware from './middleware/workPeriod.middleware';
 import WorkPeriodsController from './controllers/workPeriods.controller';
 import WorkPeriodsRepository from './repositories/workPeriods.repository';
+import AuthController from './controllers/auth.controller';
+import AuthMiddleware from './middleware/auth.middleware';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const awilix = require('awilix');
@@ -37,6 +39,8 @@ function setupContainer (appDataSource: DataSource) {
   const workPeriodsService = awilix.asClass(WorkPeriodsService);
   const workPeriodsMiddleware = awilix.asClass(WorkPeriodsMiddleware);
   const workPeriodsController =  awilix.asClass(WorkPeriodsController);
+  const authController = awilix.asClass(AuthController);
+  const authMiddleware = awilix.asClass(AuthMiddleware);
 
   container.register({
     dataSource,
@@ -52,6 +56,8 @@ function setupContainer (appDataSource: DataSource) {
     workPeriodsService,
     workPeriodsMiddleware,
     workPeriodsController,
+    authController,
+    authMiddleware,
   });
 }
 
