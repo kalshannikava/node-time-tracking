@@ -28,9 +28,13 @@ class AuthController {
     }
   }
 
-  public logoutWithCredentials (req: Request, _res: Response, next: NextFunction) {
+  public logoutWithCredentials (req: Request, res: Response, next: NextFunction) {
     req.logout(function(err) {
-      if (err) { return next(err); }
+      if (err) {
+        return next(err);
+      } else {
+        res.status(200).end();
+      }
     });
   }
 }
