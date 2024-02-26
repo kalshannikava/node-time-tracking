@@ -11,8 +11,8 @@ const createSession = (appDataSource: DataSource) => {
     resave: false,
     saveUninitialized: true,
     store: new TypeormStore({
-      cleanupLimit: 2,
-      ttl: 86400,
+      cleanupLimit: 2, // for every new session, remove this many expired ones
+      ttl: 86400, // ttl in seconds
     }).connect(sessionRepository),
     secret: crypto.randomBytes(32).toString('hex'),
   });
