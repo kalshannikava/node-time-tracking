@@ -21,11 +21,20 @@ AppDataSource.initialize()
       users: {
         middleware: container.resolve('usersMiddleware'),
         controller: container.resolve('usersController'),
+      },
+      auth: {
+        middleware: container.resolve('authMiddleware'),
+        controller: container.resolve('authController'),
       }
     }
 
     const PORT: number = Number(process.env.PORT) || 8000;
-    const server: Server = http.createServer(app(routesConfig));
+    const application = app({
+      routesConfig,
+      appDataSource: AppDataSource,
+      usersService: container.resolve('usersService'),
+    });
+    const server: Server = http.createServer(application);
 
     server.listen(PORT, () => {
       console.log(`Listening on ${PORT}...`);
