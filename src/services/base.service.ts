@@ -19,6 +19,10 @@ class BaseService<Entity extends BaseEntity> {
     return this.repository.getAll();
   }
 
+  public async getBy (searchParam: { [P in keyof Entity]?: Entity[P] }): Promise<Entity> {
+    return this.repository.getBy(searchParam);
+  }
+
   public async create (data: DeepPartial<Entity>): Promise<Entity> {
     return this.repository.create(data);
   }
