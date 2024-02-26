@@ -6,6 +6,12 @@ export class User extends BaseEntity {
   @Column('text')
   name: string;
 
+  @Column('text')
+  hash: string;
+
+  @Column('text')
+  salt: string;
+
   @Column('text', { unique: true })
   email: string;
 
