@@ -19,9 +19,13 @@ class AuthController {
   }
 
   public async signupWithCredentials (req: Request, res: Response) {
-    const { salt, hash } = generatePassword(req.body.password);
+    const passwordValues = generatePassword(req.body.password);
     try {
-      const user = await this.usersService.create({...req.body, salt, hash });
+      const { salt, hash, ...user } = await this.usersService.create({
+        ...req.body,
+        salt: passwordValues.salt,
+        hash: passwordValues.hash,
+      });
       return res.status(201).json(user);
     } catch (error) {
       return res.status(400).json({ error: error.message });
