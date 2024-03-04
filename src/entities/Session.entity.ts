@@ -10,7 +10,7 @@ export class Session implements ISession {
   @PrimaryColumn('text')
   id: string;
 
-  @Column('text')
+  @Column('json')
   json: string;
 
   @DeleteDateColumn()
