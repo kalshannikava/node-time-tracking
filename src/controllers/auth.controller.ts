@@ -41,6 +41,10 @@ class AuthController {
       }
     });
   }
+
+  public googleCallback (_req: Request, res: Response) {
+    return res.status(200).end();
+  }
 }
 
 export default AuthController;

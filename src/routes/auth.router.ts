@@ -24,7 +24,11 @@ function authRouter ({ auth }: AuthRouterContext): Router {
     auth.middleware.checkSignupRequiredFields.bind(auth.middleware),
     auth.controller.signupWithCredentials.bind(auth.controller),
   );
-  router.post('/logout', auth.controller.logoutWithCredentials.bind(auth.controller));
+  router.get('/logout', auth.controller.logoutWithCredentials.bind(auth.controller));
+
+  router.get('/login/google', passport.authenticate('google', { scope: ['profile'] }));
+
+  router.get('/login/google/redirect', passport.authenticate('google'), auth.controller.googleCallback.bind(auth.controller));
 
   return router;
 }
