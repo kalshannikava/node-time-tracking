@@ -3,7 +3,7 @@ import crypto from 'crypto';
 import { TypeormStore } from 'connect-typeorm';
 import { DataSource } from 'typeorm';
 
-import { Session } from './entities/Session.entity';
+import { Session } from '../entities/Session.entity';
 
 const createSession = (appDataSource: DataSource) => {
   const sessionRepository = appDataSource.getRepository(Session);
