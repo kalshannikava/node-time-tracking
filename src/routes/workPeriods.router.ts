@@ -2,22 +2,36 @@ import { Router } from 'express';
 
 import type WorkPeriodsController from '../controllers/workPeriods.controller';
 import type WorkPeriodsMiddleware from '../middleware/workPeriod.middleware';
+import type AuthMiddleware from '../middleware/auth.middleware';
 
-function workPeriodsRouter (workPeriodsController: WorkPeriodsController, workPeriodsMiddleware: WorkPeriodsMiddleware): Router {
+type WorkPeriodsRouterContext = {
+  workPeriods: {
+    controller: WorkPeriodsController,
+    middleware: WorkPeriodsMiddleware,
+  },
+  auth: {
+    middleware: AuthMiddleware,
+  }
+}
+
+function workPeriodsRouter ({
+  workPeriods,
+  auth,
+}: WorkPeriodsRouterContext): Router {
   const router: Router = Router();
 
   // Validation
-  router.use('/:id', workPeriodsMiddleware.checkIfWorkPeriodExists.bind(workPeriodsMiddleware));
-  router.post('/', workPeriodsMiddleware.checkIfTeamOrUserExist.bind(workPeriodsMiddleware));
-  router.put('/:id', workPeriodsMiddleware.checkIfTeamOrUserExist.bind(workPeriodsMiddleware));
-  router.delete('/:id', workPeriodsMiddleware.checkIfTeamOrUserExist.bind(workPeriodsMiddleware));
+  router.use('/:id', workPeriods.middleware.checkIfWorkPeriodExists.bind(workPeriods.middleware));
+  router.post('/', workPeriods.middleware.checkIfTeamOrUserExist.bind(workPeriods.middleware));
+  router.put('/:id', workPeriods.middleware.checkIfTeamOrUserExist.bind(workPeriods.middleware));
+  router.delete('/:id', workPeriods.middleware.checkIfTeamOrUserExist.bind(workPeriods.middleware));
 
   // Routes
-  router.get('/', workPeriodsController.getWorkPeriods.bind(workPeriodsController));
-  router.get('/:id', workPeriodsController.getWorkPeriod.bind(workPeriodsController));
-  router.post('/', workPeriodsController.createWorkPeriod.bind(workPeriodsController));
-  router.delete('/:id', workPeriodsController.deleteWorkPeriod.bind(workPeriodsController));
-  router.put('/:id', workPeriodsController.updateWorkPeriod.bind(workPeriodsController)); 
+  router.get('/', workPeriods.controller.getWorkPeriods.bind(workPeriods.controller));
+  router.get('/:id', workPeriods.controller.getWorkPeriod.bind(workPeriods.controller));
+  router.post('/', auth.middleware.isAuth, workPeriods.controller.createWorkPeriod.bind(workPeriods.controller));
+  router.delete('/:id', auth.middleware.isAuth, workPeriods.controller.deleteWorkPeriod.bind(workPeriods.controller));
+  router.put('/:id', auth.middleware.isAuth, workPeriods.controller.updateWorkPeriod.bind(workPeriods.controller)); 
 
   return router;
 }

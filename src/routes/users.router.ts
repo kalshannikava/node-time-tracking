@@ -2,20 +2,34 @@ import { Router } from 'express';
 
 import type UsersMiddleware from '../middleware/users.middleware';
 import type UsersController from '../controllers/users.controller';
+import type AuthMiddleware from '../middleware/auth.middleware';
 
-function usersRouter (usersController: UsersController, usersMiddleware: UsersMiddleware): Router {
+type UsersRouterContext = {
+  users: {
+    controller: UsersController,
+    middleware: UsersMiddleware,
+  },
+  auth: {
+    middleware: AuthMiddleware,
+  }
+}
+
+function usersRouter ({ 
+  users,
+  auth,
+}: UsersRouterContext): Router {
   const router: Router = Router();
 
   // Validation
-  router.use('/:id', usersMiddleware.checkIfUserExists.bind(usersMiddleware));
-  router.use('/', usersMiddleware.validateEmail.bind(usersMiddleware));
+  router.use('/:id', users.middleware.checkIfUserExists.bind(users.middleware));
+  router.use('/', users.middleware.validateEmail.bind(users.middleware));
 
   // Routes
-  router.get('/', usersController.getAll.bind(usersController));
-  router.get('/:id', usersController.get.bind(usersController));
-  router.post('/', usersController.create.bind(usersController));
-  router.delete('/:id', usersController.delete.bind(usersController));
-  router.put('/:id', usersController.update.bind(usersController));
+  router.get('/', auth.middleware.isAuth, users.controller.getAll.bind(users.controller));
+  router.get('/:id', auth.middleware.isAuth, users.controller.get.bind(users.controller));
+  router.post('/', auth.middleware.isAuth, users.controller.create.bind(users.controller));
+  router.delete('/:id', auth.middleware.isAuth, users.controller.delete.bind(users.controller));
+  router.put('/:id', auth.middleware.isAuth, users.controller.update.bind(users.controller));
 
   return router;
 }

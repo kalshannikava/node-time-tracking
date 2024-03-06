@@ -24,6 +24,11 @@ abstract class BaseRepository<Entity extends BaseEntity> {
     return this.repository.findOneBy(options);
   }
 
+  public async getBy (searchParam: { [P in keyof Entity]?: Entity[P] }): Promise<Entity> {
+    const options = searchParam as FindOptionsWhere<Entity> ;
+    return this.repository.findOneBy(options);
+  }
+
   public async create (entity: DeepPartial<Entity>): Promise<Entity> {
     const created = this.repository.create(entity);
     return this.repository.save(created);
