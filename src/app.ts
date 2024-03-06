@@ -6,8 +6,8 @@ import usersRouter from './routes/users.router';
 import teamsRouter from './routes/teams.router';
 import workPeriodsRouter from './routes/workPeriods.router';
 import authRouter from './routes/auth.router';
-import PassportLocal from './passport';
-import createSession from './session';
+import PassportLocal from './auth/passport';
+import createSession from './auth/session';
 import type { RoutesConfig } from './types/app';
 import type UsersService from './services/users.service';
 

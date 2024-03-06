@@ -14,8 +14,8 @@ class UsersService extends BaseService<User> {
   }
 
   public async create(data: DeepPartial<User>): Promise<User> {
-    if (!data.email || !data.name || !data.timezone) {
-      throw new Error('Missing required property');
+    if (!data.name) {
+      throw new Error('Name is required');
     }
     return super.create(data);
   }
